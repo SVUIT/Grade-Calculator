@@ -6,6 +6,7 @@ function Home() {
     <div>
       <h2>Welcome to Grade Calculator</h2>
       <p>This is the home page of your application.</p>
+      <p>Test.</p>
     </div>
   );
 }
