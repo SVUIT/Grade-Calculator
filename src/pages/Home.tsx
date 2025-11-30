@@ -6,17 +6,9 @@ export default function Home() {
     subjects: any[];
   }[]>([]);
 
-  const [newSemester, setNewSemester] = useState("");
   const [modalOpen, setModalOpen] = useState(false);
   const [editing, setEditing] =
     useState<{ semesterIdx: number; subjectIdx: number } | null>(null);
-
-  // ======================= ADD SEMESTER =======================
-  const addSemester = () => {
-    if (!newSemester.trim()) return;
-    setSemesters([...semesters, { name: newSemester, subjects: [] }]);
-    setNewSemester("");
-  };
 
   // ======================= ADD SUBJECT ========================
   const addSubject = (idx: number) => {
