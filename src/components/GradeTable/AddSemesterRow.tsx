@@ -17,6 +17,8 @@ const AddSemesterRow: React.FC<AddSemesterRowProps> = ({
         <button
           onClick={() => {
             const newId = `sem-${self.crypto.randomUUID()}`;
+            const newSubId = `sub-${self.crypto.randomUUID()}`;
+            
             if (typeof setSemesters === 'function') {
                 setSemesters([
                   ...semesters,
@@ -25,22 +27,23 @@ const AddSemesterRow: React.FC<AddSemesterRowProps> = ({
                     name: "Nhập tên học kỳ",
                     subjects: [
                       {
-                        maHP: "",
-                        tenHP: "",
-                        tinChi: "",
-                        diemQT: "",
-                        diemGK: "",
-                        diemTH: "",
-                        diemCK: "",
-                        min_diemQT: "",
-                        min_diemGK: "",
-                        min_diemTH: "",
-                        min_diemCK: "",
-                        weight_diemQT: "20",
-                        weight_diemGK: "20",
-                        weight_diemTH: "20",
-                        weight_diemCK: "40",
-                        diemHP: "",
+                        id: newSubId,
+                        courseCode: "",
+                        courseName: "",
+                        credits: "",
+                        progressScore: "",
+                        midtermScore: "",
+                        practiceScore: "",
+                        finalScore: "",
+                        minProgressScore: "",
+                        minMidtermScore: "",
+                        minPracticeScore: "",
+                        minFinalScore: "",
+                        progressWeight: "20",
+                        midtermWeight: "20",
+                        practiceWeight: "20",
+                        finalWeight: "40",
+                        score: "",
                         expectedScore: "",
                       },
                     ],

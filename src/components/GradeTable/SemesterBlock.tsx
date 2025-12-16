@@ -1,5 +1,5 @@
 import React from "react";
-import type { Semester, SubjectData } from "../../types";
+import type { Semester, Course } from "../../types";
 import { calcSemesterAverage } from "../../utils/gradeUtils";
 import SearchDropdown from "./SearchDropdown";
 import SubjectRow from "./SubjectRow";
@@ -25,7 +25,7 @@ interface SemesterBlockProps {
   setAddDropdownOpen: (val: number | null) => void;
   addSearchTerm: string;
   setAddSearchTerm: (term: string) => void;
-  addSearchResults: { category: string; subjects: SubjectData[] }[];
+  addSearchResults: { category: string; subjects: Course[] }[];
   addExpandedCategories: Set<string>;
   setAddExpandedCategories: (cats: Set<string>) => void;
 
@@ -38,7 +38,7 @@ interface SemesterBlockProps {
   ) => void;
   editSearchTerm: string;
   setEditSearchTerm: (term: string) => void;
-  editSearchResults: { category: string; subjects: SubjectData[] }[];
+  editSearchResults: { category: string; subjects: Course[] }[];
   editExpandedCategories: Set<string>;
   setEditExpandedCategories: (cats: Set<string>) => void;
 }
@@ -81,6 +81,9 @@ const SemesterBlock: React.FC<SemesterBlockProps> = ({
             <span
               contentEditable
               suppressContentEditableWarning
+              role="textbox"
+              tabIndex={0}
+              aria-label="Tên học kỳ"
               className="editable-cell-multiline"
               onKeyDown={(e) => {
                 if (e.key === "Enter") {
@@ -123,27 +126,34 @@ const SemesterBlock: React.FC<SemesterBlockProps> = ({
                   expandedCategories={addExpandedCategories}
                   setExpandedCategories={setAddExpandedCategories}
                   minWidth={260} // Explicitly smaller width for compact UI
-                  onSelect={(subject: SubjectData) => {
+                  onSelect={(course: Course) => {
                     setSemesters((prev) => {
                       const updated = JSON.parse(JSON.stringify(prev));
                       if (updated[si]) {
+                          // Convert default weights (0.x) to percentage strings
+                          const wQT = course.defaultWeights?.progressWeight !== undefined ? (course.defaultWeights.progressWeight * 100).toString() : "20";
+                          const wGK = course.defaultWeights?.midtermWeight !== undefined ? (course.defaultWeights.midtermWeight * 100).toString() : "20";
+                          const wTH = course.defaultWeights?.practiceWeight !== undefined ? (course.defaultWeights.practiceWeight * 100).toString() : "20";
+                          const wCK = course.defaultWeights?.finalTermWeight !== undefined ? (course.defaultWeights.finalTermWeight * 100).toString() : "40";
+
                           updated[si].subjects.push({
-                              maHP: subject.code,
-                              tenHP: subject.name,
-                              tinChi: "",
-                              diemQT: "",
-                              diemGK: "",
-                              diemTH: "",
-                              diemCK: "",
-                              min_diemQT: "",
-                              min_diemGK: "",
-                              min_diemTH: "",
-                              min_diemCK: "",
-                              weight_diemQT: "20",
-                              weight_diemGK: "20",
-                              weight_diemTH: "20",
-                              weight_diemCK: "40",
-                              diemHP: "",
+                              id: `sub-${self.crypto.randomUUID()}`,
+                              courseCode: course.courseCode,
+                              courseName: course.courseNameVi,
+                              credits: course.credits !== undefined ? course.credits.toString() : "",
+                              progressScore: "",
+                              midtermScore: "",
+                              practiceScore: "",
+                              finalScore: "",
+                              minProgressScore: "",
+                              minMidtermScore: "",
+                              minPracticeScore: "",
+                              minFinalScore: "",
+                              progressWeight: wQT,
+                              midtermWeight: wGK,
+                              practiceWeight: wTH,
+                              finalWeight: wCK,
+                              score: "",
                               expectedScore: "",
                           });
                       }
@@ -179,7 +189,7 @@ const SemesterBlock: React.FC<SemesterBlockProps> = ({
       {/* MÔN HỌC */}
       {sem.subjects.map((sub, i) => (
         <SubjectRow
-          key={i}
+          key={sub.id || i}
           semesterIndex={si}
           subjectIndex={i}
           subject={sub}

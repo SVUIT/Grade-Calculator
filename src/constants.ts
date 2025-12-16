@@ -1,17 +1,19 @@
-import type { SubjectsData } from "./types";
+import courses from "./assets/courses_weighted.json";
+import type { Course } from "./types";
 
-export const SUBJECTS_DATA: SubjectsData = {
-  "Môn học chuyên ngành": [
-    { code: "IT001", name: "Toán" },
-    { code: "IT002", name: "Lý" },
-  ],
-  "Môn học cơ sở ngành": [
-    { code: "IT003", name: "Anh" },
-  ],
-  "Môn học tự chọn": [
-    { code: "IT004", name: "Văn" },
-  ],
-  "Môn học đại cương": [
-    { code: "IT005", name: "Hoá" },
-  ],
+const CATEGORY_MAP: Record<string, string> = {
+  "ĐC": "Đại cương",
+  "CSNN": "Cơ sở nhóm ngành (CSNN)",
+  "CSN": "Cơ sở ngành (CSN)",
+  "CN": "Chuyên ngành (CN/CNTC)",
+  "CNTC": "Chuyên ngành (CN/CNTC)",
+  "TN": "Khác (Tự chọn/CĐTN/TN)",
+  "CĐTN": "Khác (Tự chọn/CĐTN/TN)",
 };
+
+export const SUBJECTS_DATA = (courses as Course[]).reduce((acc, course) => {
+  const cat = CATEGORY_MAP[course.courseType] || "Khác (Tự chọn/CĐTN/TN)";
+  if (!acc[cat]) acc[cat] = [];
+  acc[cat].push(course);
+  return acc;
+}, {} as Record<string, Course[]>);

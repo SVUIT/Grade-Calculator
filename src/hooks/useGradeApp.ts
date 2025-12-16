@@ -9,6 +9,28 @@ const THEME_KEY = "grade_app_theme";
 // Helper to generate unique ID
 const generateId = (prefix = "sem") => `${prefix}-${self.crypto.randomUUID()}`;
 
+// Default empty subject based on new schema
+const createEmptySubject = (): Subject => ({
+  id: generateId("sub"),
+  courseCode: "",
+  courseName: "",
+  credits: "",
+  progressScore: "",
+  midtermScore: "",
+  practiceScore: "",
+  finalScore: "",
+  minProgressScore: "",
+  minMidtermScore: "",
+  minPracticeScore: "",
+  minFinalScore: "",
+  progressWeight: "20",
+  midtermWeight: "20",
+  practiceWeight: "20",
+  finalWeight: "40",
+  score: "",
+  expectedScore: "",
+});
+
 export const useGradeApp = () => {
   // Theme State
   const [theme, setTheme] = useState<"light" | "dark">(() => {
@@ -30,10 +52,40 @@ export const useGradeApp = () => {
       const saved = localStorage.getItem(LOCAL_STORAGE_KEY);
       if (saved) {
         const parsed = JSON.parse(saved);
-        // Migration: Ensure all semesters have IDs
-        return parsed.map((s: Semester) => ({
+        
+        // Simple migration check: if data uses old key 'maHP', map it to new schema
+        return parsed.map((s: any) => ({
           ...s,
-          id: s.id || generateId()
+          id: s.id || generateId("sem"),
+          subjects: s.subjects.map((sub: any) => {
+            if (sub.maHP !== undefined) {
+              // Map old structure to new structure
+              return {
+                id: sub.id || generateId("sub"),
+                courseCode: sub.maHP,
+                courseName: sub.tenHP,
+                credits: sub.tinChi,
+                progressScore: sub.diemQT,
+                midtermScore: sub.diemGK,
+                practiceScore: sub.diemTH,
+                finalScore: sub.diemCK,
+                minProgressScore: sub.min_diemQT || "",
+                minMidtermScore: sub.min_diemGK || "",
+                minPracticeScore: sub.min_diemTH || "",
+                minFinalScore: sub.min_diemCK || "",
+                progressWeight: sub.weight_diemQT || "20",
+                midtermWeight: sub.weight_diemGK || "20",
+                practiceWeight: sub.weight_diemTH || "20",
+                finalWeight: sub.weight_diemCK || "40",
+                score: sub.diemHP,
+                expectedScore: sub.expectedScore
+              };
+            }
+            return {
+               ...sub,
+               id: sub.id || generateId("sub")
+            };
+          })
         }));
       }
     } catch (error) {
@@ -43,29 +95,9 @@ export const useGradeApp = () => {
     // Default initial state
     return [
       {
-        id: generateId(),
+        id: generateId("sem"),
         name: "Học kỳ 1",
-        subjects: [
-          {
-            maHP: "",
-            tenHP: "",
-            tinChi: "",
-            diemQT: "",
-            diemGK: "",
-            diemTH: "",
-            diemCK: "",
-            min_diemQT: "",
-            min_diemGK: "",
-            min_diemTH: "",
-            min_diemCK: "",
-            weight_diemQT: "20",
-            weight_diemGK: "20",
-            weight_diemTH: "20",
-            weight_diemCK: "40",
-            diemHP: "",
-            expectedScore: "",
-          },
-        ],
+        subjects: [createEmptySubject()],
       },
     ];
   });
@@ -134,7 +166,7 @@ export const useGradeApp = () => {
       if (!targetSubject) return prev;
 
       // Logic for score normalization
-      const isScoreField = ["diemQT", "diemGK", "diemTH", "diemCK"].includes(field);
+      const isScoreField = ["progressScore", "midtermScore", "practiceScore", "finalScore"].includes(field);
       const newValue = isScoreField ? normalizeScore(value) : value;
 
       // Update the specific subject
@@ -157,7 +189,6 @@ export const useGradeApp = () => {
     null
   );
   
-  // New state for Semester Menu - No longer strictly needed but kept for compatibility
   const [semesterMenuOpen, setSemesterMenuOpen] = useState<number | null>(null);
 
   const [addDropdownOpen, setAddDropdownOpen] = useState<number | null>(null);
