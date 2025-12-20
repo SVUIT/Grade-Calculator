@@ -69,18 +69,7 @@ const GradeTable: React.FC<GradeTableProps> = ({
 }) => {
   return (
     <table className="grade-table">
-      <colgroup>
-        <col className="col-stt" />
-        <col className="col-mahp" />
-        <col className="col-tenhp" />
-        <col className="col-tc" />
-        <col className="col-score" /> {/* QT */}
-        <col className="col-score" /> {/* GK */}
-        <col className="col-score" /> {/* TH */}
-        <col className="col-score" /> {/* CK */}
-        <col className="col-diemhp" />
-        <col className="col-expected" />
-      </colgroup>
+      <colgroup><col className="col-stt" /><col className="col-mahp" /><col className="col-tenhp" /><col className="col-tc" /><col className="col-score" /><col className="col-score" /><col className="col-score" /><col className="col-score" /><col className="col-diemhp" /><col className="col-expected" /></colgroup>
       <thead>
         <tr>
           <th>STT</th>
