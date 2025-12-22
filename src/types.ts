@@ -1,35 +1,48 @@
+export interface Course {
+  courseCode: string;
+  courseNameEn: string;
+  courseNameVi: string;
+  courseType: string;
+  credits: number;
+  defaultWeights: {
+    progressWeight: number;
+    practiceWeight: number;
+    midtermWeight: number;
+    finalTermWeight: number;
+  };
+}
+
 export interface Subject {
-  maHP: string;
-  tenHP: string;
-  tinChi: string;
-  diemQT: string;
-  diemGK: string;
-  diemTH: string;
-  diemCK: string;
-  min_diemQT: string;
-  min_diemGK: string;
-  min_diemTH: string;
-  min_diemCK: string;
-  weight_diemQT: string;
-  weight_diemGK: string;
-  weight_diemTH: string;
-  weight_diemCK: string;
-  diemHP: string;
+  id?: string;
+  courseCode: string;
+  courseName: string;
+  credits: string; // kept as string for UI compatibility
+
+  // Scores
+  progressScore: string;
+  practiceScore: string;
+  midtermScore: string;
+  finalScore: string; // Maps to finaltermScore
+
+  // Min Scores (calculated)
+  minProgressScore: string;
+  minPracticeScore: string;
+  minMidtermScore: string;
+  minFinalScore: string;
+
+  // Weights (0-100 strings for UI)
+  progressWeight: string;
+  practiceWeight: string;
+  midtermWeight: string;
+  finalWeight: string; // Maps to finalTermWeight
+
+  score: string; // diemHP
   expectedScore: string;
-  [key: string]: any; // Allow indexing for dynamic field updates
+  [key: string]: any;
 }
 
 export interface Semester {
   id?: string;
   name: string;
   subjects: Subject[];
-}
-
-export interface SubjectData {
-  code: string;
-  name: string;
-}
-
-export interface SubjectsData {
-  [category: string]: SubjectData[];
 }

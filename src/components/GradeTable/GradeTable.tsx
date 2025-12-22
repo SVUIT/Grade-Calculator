@@ -1,5 +1,5 @@
 import React from "react";
-import type { Semester, SubjectData } from "../../types";
+import type { Semester, Course } from "../../types";
 import SemesterBlock from "./SemesterBlock";
 import AddSemesterRow from "./AddSemesterRow";
 import SummaryRows from "./SummaryRows";
@@ -25,7 +25,7 @@ interface GradeTableProps {
   setAddDropdownOpen: (val: number | null) => void;
   addSearchTerm: string;
   setAddSearchTerm: (term: string) => void;
-  addSearchResults: { category: string; subjects: SubjectData[] }[];
+  addSearchResults: { category: string; subjects: Course[] }[];
   addExpandedCategories: Set<string>;
   setAddExpandedCategories: (cats: Set<string>) => void;
 
@@ -36,7 +36,7 @@ interface GradeTableProps {
   ) => void;
   editSearchTerm: string;
   setEditSearchTerm: (term: string) => void;
-  editSearchResults: { category: string; subjects: SubjectData[] }[];
+  editSearchResults: { category: string; subjects: Course[] }[];
   editExpandedCategories: Set<string>;
   setEditExpandedCategories: (cats: Set<string>) => void;
 }

@@ -1,66 +1,85 @@
 import React from "react";
-import type { SubjectData } from "../../types";
+import type { Course } from "../../types";
 
 interface SearchDropdownProps {
   searchTerm: string;
   setSearchTerm: (term: string) => void;
-  searchResults: { category: string; subjects: SubjectData[] }[];
+  searchResults: { category: string; subjects: Course[] }[];
   expandedCategories: Set<string>;
   setExpandedCategories: (cats: Set<string>) => void;
-  onSelect: (subject: SubjectData) => void;
+  onSelect: (subject: Course) => void;
   autoFocus?: boolean;
   minWidth?: number;
 }
 
 // Extracted SubjectItem to reduce nesting
-const SubjectItem = ({
+const SubjectItem: React.FC<{
+  subject: Course;
+  onSelect: (s: Course) => void;
+}> = ({
   subject,
   onSelect,
-  handleKeyDown,
-}: {
-  subject: SubjectData;
-  onSelect: (s: SubjectData) => void;
-  handleKeyDown: (e: React.KeyboardEvent, action: () => void) => void;
 }) => (
-  <div
-    className="subject-item"
-    role="listitem"
-    tabIndex={0}
-    onKeyDown={(e) => handleKeyDown(e, () => onSelect(subject))}
-    onClick={() => onSelect(subject)}
-  >
-    <span className="subject-code">{subject.code}</span>
-    <span className="subject-name">{subject.name}</span>
-  </div>
+  <li style={{ listStyle: "none", margin: 0, padding: 0 }}>
+    <button
+      type="button"
+      className="subject-item"
+      onClick={() => onSelect(subject)}
+      style={{
+        width: "100%",
+        textAlign: "left",
+        background: "transparent",
+        borderTop: "none",
+        borderRight: "none",
+        borderBottom: "none",
+        // borderLeft is handled by class for hover effect
+        borderRadius: 0,
+        fontFamily: "inherit",
+        fontSize: "inherit",
+        margin: 0,
+        // padding is handled by class
+      }}
+    >
+      <span className="subject-code">{subject.courseCode}</span>
+      <span className="subject-name">{subject.courseNameVi}</span>
+    </button>
+  </li>
 );
 
 // Extracted CategoryGroup to reduce nesting
-const CategoryGroup = ({
+const CategoryGroup: React.FC<{
+  category: string;
+  subjects: Course[];
+  isExpanded: boolean;
+  hasSearchResults: boolean;
+  toggleCategory: (c: string) => void;
+  onSelect: (s: Course) => void;
+}> = ({
   category,
   subjects,
   isExpanded,
   hasSearchResults,
   toggleCategory,
   onSelect,
-  handleKeyDown,
-}: {
-  category: string;
-  subjects: SubjectData[];
-  isExpanded: boolean;
-  hasSearchResults: boolean;
-  toggleCategory: (c: string) => void;
-  onSelect: (s: SubjectData) => void;
-  handleKeyDown: (e: React.KeyboardEvent, action: () => void) => void;
 }) => {
   return (
     <div className="category-group">
-      <div
+      <button
+        type="button"
         className="category-header"
-        role="button"
-        tabIndex={0}
         aria-expanded={isExpanded}
-        onKeyDown={(e) => handleKeyDown(e, () => toggleCategory(category))}
         onClick={() => toggleCategory(category)}
+        style={{
+          width: "100%",
+          textAlign: "left",
+          background: "transparent",
+          border: "none",
+          borderRadius: 0,
+          fontFamily: "inherit",
+          fontSize: "inherit",
+          margin: 0,
+          // padding is handled by class
+        }}
       >
         <span className="category-title">{category}</span>
         <span className="category-arrow">
@@ -83,19 +102,18 @@ const CategoryGroup = ({
             <polyline points="6 9 12 15 18 9"></polyline>
           </svg>
         </span>
-      </div>
+      </button>
 
       {(isExpanded || hasSearchResults) && (
-        <div className="subject-list" role="list">
+        <ul className="subject-list" style={{ padding: 0, margin: 0, listStyle: "none" }}>
           {subjects.map((subject) => (
             <SubjectItem
-              key={subject.code}
+              key={subject.courseCode}
               subject={subject}
               onSelect={onSelect}
-              handleKeyDown={handleKeyDown}
             />
           ))}
-        </div>
+        </ul>
       )}
     </div>
   );
@@ -121,16 +139,12 @@ const SearchDropdown: React.FC<SearchDropdownProps> = ({
     setExpandedCategories(newSet);
   };
 
-  const handleKeyDown = (e: React.KeyboardEvent, action: () => void) => {
-    if (e.key === "Enter" || e.key === " ") {
-      e.preventDefault();
-      action();
-    }
-  };
-
   return (
     <div
       className="dropdown-menu"
+      role="dialog"
+      aria-modal="false"
+      aria-label="Search Subjects"
       style={{
         minWidth: minWidth,
         maxWidth: "90vw",
@@ -181,7 +195,6 @@ const SearchDropdown: React.FC<SearchDropdownProps> = ({
               hasSearchResults={!!hasSearchResults}
               toggleCategory={toggleCategory}
               onSelect={onSelect}
-              handleKeyDown={handleKeyDown}
             />
           );
         })}

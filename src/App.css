@@ -344,7 +344,8 @@ body {
 /* Utilities */
 .text-white { color: #ffffff !important; }
 .text-normal { color: var(--text-color); }
-.score-over-10 { color: red; font-weight: bold; }
+.score-over-10 { color: #FF4D4F; font-weight: bold; } /* Default/Dark Mode Red (High Contrast on Dark) */
+.light-mode .score-over-10 { color: #CF1322; } /* Light Mode Red (High Contrast on White) */
 .text-yellow { color: yellow; }
 .light-mode .text-yellow { color: #d32f2f; }
 .text-gray { color: #888; }

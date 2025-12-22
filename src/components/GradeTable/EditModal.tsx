@@ -28,7 +28,14 @@ const EditModal: React.FC<EditModalProps> = ({
   const [activeWeightField, setActiveWeightField] = useState<string | null>(null);
   const [tempWeightValue, setTempWeightValue] = useState<string>("");
 
-  const handleWeightCommit = (field: string) => {
+  const fieldMap: { key: string; minKey: string; weightKey: string; label: string }[] = [
+      { key: "progressScore", minKey: "minProgressScore", weightKey: "progressWeight", label: "QT" },
+      { key: "midtermScore", minKey: "minMidtermScore", weightKey: "midtermWeight", label: "GK" },
+      { key: "practiceScore", minKey: "minPracticeScore", weightKey: "practiceWeight", label: "TH" },
+      { key: "finalScore", minKey: "minFinalScore", weightKey: "finalWeight", label: "CK" },
+  ];
+
+  const handleWeightCommit = (weightKey: string) => {
     let val = tempWeightValue;
     
     // Validate số
@@ -45,17 +52,16 @@ const EditModal: React.FC<EditModalProps> = ({
     }
 
     const updated = [...semesters];
-    // Use type assertion or indexed access with strict types
-    (updated[editing.semesterIdx].subjects[editing.subjectIdx] as any)[`weight_${field}`] = val;
+    (updated[editing.semesterIdx].subjects[editing.subjectIdx] as any)[weightKey] = val;
     setSemesters(updated);
 
     // Check tổng trọng số sau khi commit
     const subj = updated[editing.semesterIdx].subjects[editing.subjectIdx];
     const total =
-      Number(subj.weight_diemQT || 0) +
-      Number(subj.weight_diemGK || 0) +
-      Number(subj.weight_diemTH || 0) +
-      Number(subj.weight_diemCK || 0);
+      Number(subj.progressWeight || 0) +
+      Number(subj.midtermWeight || 0) +
+      Number(subj.practiceWeight || 0) +
+      Number(subj.finalWeight || 0);
     setWeightError(total !== 100);
 
     setActiveWeightField(null);
@@ -112,7 +118,7 @@ const EditModal: React.FC<EditModalProps> = ({
         }}
       >
         <h3 style={{ margin: "0 0 20px 0", textAlign: "center", fontSize: "1.2rem", wordBreak: "break-word" }}>
-          {semesters[editing.semesterIdx].subjects[editing.subjectIdx].tenHP}
+          {semesters[editing.semesterIdx].subjects[editing.subjectIdx].courseName}
         </h3>
 
         <div style={{ overflowX: "auto" }}>
@@ -135,19 +141,19 @@ const EditModal: React.FC<EditModalProps> = ({
             </thead>
 
             <tbody>
-              {["diemQT", "diemGK", "diemTH", "diemCK"].map((f) => {
+              {fieldMap.map((f) => {
                 const currentSubject =
                   semesters[editing.semesterIdx].subjects[editing.subjectIdx];
-                const score = (currentSubject as any)[f];
-                const minScore = (currentSubject as any)[`min_${f}`];
+                const score = (currentSubject as any)[f.key];
+                const minScore = (currentSubject as any)[f.minKey];
                 const hasMinScore = minScore && minScore.toString().trim() !== "";
                 const isOver10 = hasMinScore && Number(minScore) > 10;
-                const weightVal = (currentSubject as any)[`weight_${f}`];
+                const weightVal = (currentSubject as any)[f.weightKey];
 
                 return (
-                  <tr key={f}>
+                  <tr key={f.key}>
                     <td style={{ background: "var(--primary-purple)", color: "white", fontWeight: "bold", padding: "10px 5px", border: "1px solid var(--border-color)", fontSize: "13px" }}>
-                      {f.replace("diem", "")}
+                      {f.label}
                     </td>
 
                     <td style={{ background: "var(--dropdown-bg)", padding: 0, border: "1px solid var(--border-color)" }}>
@@ -159,7 +165,7 @@ const EditModal: React.FC<EditModalProps> = ({
                           const newVal = e.target.value;
                           const updated = [...semesters];
                           (updated[editing.semesterIdx].subjects[editing.subjectIdx] as any)[
-                            f
+                            f.key
                           ] = newVal;
                           setSemesters(updated);
                         }}
@@ -170,11 +176,12 @@ const EditModal: React.FC<EditModalProps> = ({
                             updated[editing.semesterIdx].subjects[
                               editing.subjectIdx
                             ];
-                          (subj as any)[f] = normalized;
+                          (subj as any)[f.key] = normalized;
 
-                          ["diemQT", "diemGK", "diemTH", "diemCK"].forEach(
+                          // Reset all min fields
+                          ["minProgressScore", "minMidtermScore", "minPracticeScore", "minFinalScore"].forEach(
                             (field) => {
-                              (subj as any)[`min_${field}`] = "";
+                              (subj as any)[field] = "";
                             }
                           );
 
@@ -226,23 +233,23 @@ const EditModal: React.FC<EditModalProps> = ({
                     <td 
                       style={{ background: "var(--dropdown-bg)", padding: 0, border: "1px solid var(--border-color)", cursor: 'pointer' }}
                       onClick={() => {
-                          if (activeWeightField !== f) {
-                              setActiveWeightField(f);
+                          if (activeWeightField !== f.weightKey) {
+                              setActiveWeightField(f.weightKey);
                               setTempWeightValue(weightVal);
                           }
                       }}
                     >
-                      {activeWeightField === f ? (
+                      {activeWeightField === f.weightKey ? (
                           <input
                               autoFocus
                               type="text"
                               inputMode="numeric"
                               value={tempWeightValue}
                               onChange={(e) => setTempWeightValue(e.target.value)}
-                              onBlur={() => handleWeightCommit(f)}
+                              onBlur={() => handleWeightCommit(f.weightKey)}
                               onKeyDown={(e) => {
                                   if (e.key === "Enter") {
-                                      handleWeightCommit(f);
+                                      handleWeightCommit(f.weightKey);
                                   }
                               }}
                               style={{
