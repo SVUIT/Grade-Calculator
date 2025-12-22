@@ -3,7 +3,7 @@ import type { Course } from "./types";
 
 const CATEGORY_MAP: Record<string, string> = {
   "ĐC": "Đại cương",
-  "CSNN": "Cơ sở nhóm ngành (CSNN)",
+  "CSNN": "Cơ sở ngành (CSN)",
   "CSN": "Cơ sở ngành (CSN)",
   "CN": "Chuyên ngành (CN/CNTC)",
   "CNTC": "Chuyên ngành (CN/CNTC)",

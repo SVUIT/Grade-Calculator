@@ -238,7 +238,11 @@ const SubjectRow: React.FC<SubjectRowProps> = ({
             key={f.key}
             className="score-cell"
             style={{
-              background: hasMinScore ? "var(--primary-purple)" : "transparent",
+              background: hasMinScore
+                ? isOver10
+                  ? "rgba(255, 0, 0, 0.1)"
+                  : "var(--primary-purple)"
+                : "transparent",
             }}
           >
             <div
