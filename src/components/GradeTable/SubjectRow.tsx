@@ -240,7 +240,7 @@ const SubjectRow: React.FC<SubjectRowProps> = ({
             style={{
               background: hasMinScore
                 ? isOver10
-                  ? "rgba(255, 0, 0, 0.1)"
+                  ? "transparent"
                   : "var(--primary-purple)"
                 : "transparent",
             }}
