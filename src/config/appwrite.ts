@@ -45,3 +45,73 @@ export const uploadPdf = async (file: File): Promise<any> => {
     throw new Error('An unknown error occurred during file upload');
   }
 };
+
+interface AcademicRecord {
+  totalCredits: number;
+  gpa: number;
+  hasFGrade: boolean;
+  completedThesis: boolean;
+  thesisScore?: number;
+  englishProficiency: {
+    type: 'IELTS' | 'TOEFL' | 'TOEIC' | 'VSTEP' | 'UIT';
+    score: number;
+  };
+  completedMilitaryTraining: boolean;
+  completedPhysicalEducation: boolean;
+  completedSoftSkills: boolean;
+  isUnderDisciplinaryAction: boolean;
+}
+
+export const checkGraduationEligibility = (record: AcademicRecord): { eligible: boolean; reasons: string[] } => {
+  const reasons: string[] = [];
+
+  // 1. Check credit and GPA requirements
+  if (record.totalCredits < 130) {
+    reasons.push(`Not enough credits (${record.totalCredits}/130 required)`);
+  }
+  if (record.gpa < 2.0) {
+    reasons.push(`GPA too low (${record.gpa.toFixed(2)}/4.00 required)`);
+  }
+  if (record.hasFGrade) {
+    reasons.push('Has F grade in one or more courses');
+  }
+
+  // 2. Check thesis or alternative requirements
+  if (!record.completedThesis || (record.thesisScore !== undefined && record.thesisScore < 5.0)) {
+    reasons.push('Thesis or alternative requirements not met');
+  }
+
+  // 3. Check English proficiency
+  const { type, score } = record.englishProficiency;
+  const englishPassed = 
+    (type === 'IELTS' && score >= 5.5) ||
+    (type === 'TOEFL' && score >= 61) ||
+    (type === 'TOEIC' && score >= 600) ||
+    (type === 'VSTEP' && score >= 3.5) || // B1 level
+    (type === 'UIT' && score >= 60); // Assuming 60 is passing for UIT test
+
+  if (!englishPassed) {
+    reasons.push('English proficiency requirement not met');
+  }
+
+  // 4. Check additional requirements
+  if (!record.completedMilitaryTraining) {
+    reasons.push('Military training not completed');
+  }
+  if (!record.completedPhysicalEducation) {
+    reasons.push('Physical education not completed');
+  }
+  if (!record.completedSoftSkills) {
+    reasons.push('Soft skills requirement not met');
+  }
+
+  // 5. Check disciplinary status
+  if (record.isUnderDisciplinaryAction) {
+    reasons.push('Student is under disciplinary action');
+  }
+
+  return {
+    eligible: reasons.length === 0,
+    reasons
+  };
+};
