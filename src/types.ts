@@ -41,8 +41,22 @@ export interface Subject {
   [key: string]: any;
 }
 
+export interface SemesterSummary {
+  averageScore: number;
+  creditsEarned: number;
+}
+
+export interface CumulativeSummary {
+  totalCreditsAccumulated: number;
+  cumulativeGpa: number;
+}
+
 export interface Semester {
   id?: string;
   name: string;
+  semesterName: string;
+  year: string;
   subjects: Subject[];
+  semesterSummary?: SemesterSummary;
+  cumulativeSummary?: CumulativeSummary;
 }
