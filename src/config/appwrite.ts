@@ -21,14 +21,6 @@ if (process.env.NEXT_PUBLIC_APPWRITE_API_KEY) {
 const functions = new Functions(client);
 const storage = new Storage(client);
 
-const readFileAsArrayBuffer = (file: File): Promise<ArrayBuffer> => {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onload = () => resolve(reader.result as ArrayBuffer);
-    reader.onerror = reject;
-    reader.readAsArrayBuffer(file);
-  });
-};
 
 const fileToBase64 = (file: File): Promise<string> => {
   return new Promise((resolve, reject) => {
