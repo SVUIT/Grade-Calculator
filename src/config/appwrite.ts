@@ -18,13 +18,6 @@ if (process.env.NEXT_PUBLIC_APPWRITE_API_KEY) {
   client.setKey(process.env.NEXT_PUBLIC_APPWRITE_API_KEY);
 }
 
-const defaultHeaders = {
-  "Content-Type": "application/json",
-  "X-Appwrite-Project": process.env.NEXT_PUBLIC_APPWRITE_PROJECT_ID || "",
-  "X-Appwrite-Key": process.env.NEXT_PUBLIC_APPWRITE_API_KEY || "",
-  Accept: "application/json",
-};
-
 const functions = new Functions(client);
 const storage = new Storage(client);
 
