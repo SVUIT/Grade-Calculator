@@ -371,7 +371,7 @@ const SubjectRow: React.FC<SubjectRowProps> = ({
                 openAdvancedModal(si, i);
              }}
           >
-            Chỉnh sửa nâng cao
+            Chỉnh sửa
           </div>
 
           <div 

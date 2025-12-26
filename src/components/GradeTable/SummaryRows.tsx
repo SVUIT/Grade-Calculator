@@ -1,6 +1,6 @@
 import React from "react";
 import type { Semester } from "../../types";
-import { calcSubjectScore } from "../../utils/gradeUtils";
+import { calcSubjectScore, calcRequiredScores } from "../../utils/gradeUtils";
 
 interface SummaryRowsProps {
   semesters: Semester[];
@@ -65,7 +65,53 @@ const SummaryRows: React.FC<SummaryRowsProps> = ({ semesters }) => {
           })()}
         </td>
 
-        <td></td>
+        <td>
+          <div
+            contentEditable
+            suppressContentEditableWarning
+            data-placeholder={"Nhập điểm kỳ vọng cả khóa"}
+            className="editable-cell expected-score-cell"
+            role="textbox"
+            tabIndex={0}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                e.preventDefault();
+                e.currentTarget.blur();
+              }
+            }}
+            onBlur={(e) => {
+              const text = e.currentTarget.textContent?.trim() || "";
+              if (text === "") return;
+              const xp = Number(text);
+              if (isNaN(xp)) return;
+
+              // Apply expected GPA across all subjects that are not fully scored
+              const updated = JSON.parse(JSON.stringify(semesters));
+              updated.forEach((sem: any) => {
+                sem.subjects.forEach((sub: any) => {
+                  const hasAll = ["progressScore", "midtermScore", "practiceScore", "finalScore"].every((f) => {
+                    const v = (sub as any)[f];
+                    return v !== undefined && v.toString().trim() !== "";
+                  });
+                  if (hasAll) return;
+
+                  sub.expectedScore = xp.toString();
+                  const required = calcRequiredScores(sub, xp);
+                  Object.entries(required).forEach(([field, value]) => {
+                    (sub as any)[field] = value;
+                  });
+                });
+              });
+
+              // Write back to local storage via a small event: dispatch a custom event consumers can catch
+              // or simply replace window.localStorage directly here if desired by caller. We'll update by
+              // setting a hidden global - callers using `setSemesters` should be invoked by parent components.
+              // For now, try to update via a small hack: find global setter by dispatching a custom event.
+              const event = new CustomEvent("applyExpectedOverall", { detail: updated });
+              window.dispatchEvent(event as any);
+            }}
+          />
+        </td>
       </tr>
     </>
   );
