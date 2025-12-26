@@ -19,6 +19,7 @@
   --modal-bg: #1e1e1e;
   --text-muted: #999;
   --dropdown-border: #454545;
+  --tab-inactive: #3F3F46;
 }
 
 .light-mode {
@@ -35,6 +36,7 @@
   --modal-bg: #ffffff;
   --text-muted: #555;
   --dropdown-border: #ccc;
+  --tab-inactive: #e0e0e0;
 }
 
 body {
@@ -59,14 +61,103 @@ body {
   background-color: var(--bg-container);
 }
 
+/* Tab Navigation */
+.tab-navigation {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  justify-content: center;
+}
+
+.tab-button {
+  background: var(--tab-inactive);
+  color: var(--text-color);
+  border: none;
+  padding: 10px 25px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.2s;
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+.tab-button.active {
+  background: var(--primary-purple);
+  color: white;
+  box-shadow: 0 4px 12px rgba(113, 26, 255, 0.3);
+}
+
+.tab-button:hover:not(.active) {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.light-mode .tab-button:hover:not(.active) {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+/* Instructions Layout */
+.instructions-container {
+  animation: fadeIn 0.3s ease-in-out;
+  line-height: 1.6;
+}
+
+.instructions-container h1 {
+  font-size: 2.5rem !important;
+  margin-bottom: 40px !important;
+}
+
+.instructions-container h2 {
+  color: var(--primary-purple);
+  border-bottom: 2px solid var(--border-color);
+  padding-bottom: 10px;
+  margin-top: 40px;
+  margin-bottom: 20px;
+  font-size: 1.5rem;
+}
+
+.instruction-item {
+  background: rgba(113, 26, 255, 0.05);
+  border: 1px solid var(--border-color);
+  padding: 20px;
+  border-radius: 12px;
+  margin-bottom: 20px;
+}
+
+.instruction-item h3 {
+  margin-top: 0;
+  color: var(--text-color);
+  font-size: 1.1rem;
+}
+
+.instructions-container code {
+  display: block;
+  background: var(--input-bg);
+  padding: 15px;
+  border-radius: 8px;
+  margin: 15px 0;
+  font-family: 'Courier New', Courier, monospace;
+  font-weight: bold;
+  text-align: center;
+  color: var(--primary-purple);
+}
+
+.instructions-container ul {
+  padding-left: 20px;
+}
+
+.instructions-container li {
+  margin-bottom: 10px;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
 /* Table Wrapper */
 .table-wrapper {
   width: 100%;
-  /* 
-     We use overflow-x: visible to allow the "3-dots" menu 
-     (which is absolute positioned outside the table) to be seen.
-     The table is designed to fit 100% width.
-  */
   overflow-x: visible; 
   padding-bottom: 10px;
   border-radius: 6px;
@@ -75,15 +166,18 @@ body {
 /* Navbar & Footer */
 .navbar {
   background: var(--bg-container);
-  padding: 15px 15%; /* Synced with app-container padding */
-  border-bottom: 1px solid #4f4f4f;
+  padding: 12px 15%; 
+  border-bottom: 1px solid var(--border-color);
   color: var(--text-color);
-  font-weight: bold;
-  font-size: 20px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
 }
+
 .light-mode .navbar {
-    background: #f0f0f0;
-    border-bottom: 1px solid #ccc;
+    background: rgba(255, 255, 255, 0.8);
 }
 
 .footer {
@@ -234,9 +328,8 @@ body {
   outline: none;
   background: transparent;
   color: var(--text-color);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  white-space: normal; /* Fixed: allows wrapping instead of truncation */
+  overflow-wrap: break-word; 
   cursor: pointer;
   min-height: 20px;
   line-height: 1.4;
@@ -442,10 +535,15 @@ body {
 .subject-name { color: var(--text-color); opacity: 0.9; }
 
 /* ================= RESPONSIVE ================= */
+@media (min-width: 1280px) {
+  .app-container { padding: 40px 8% 40px 8%; }
+  .navbar { padding: 12px 8%; }
+}
+
 @media (max-width: 1024px) {
   /* Tablet/Small Desktop: Reduce padding significantly to fit the table */
   /* Reduced bottom padding to 0 to bring footer closer */
-  .app-container { padding: 30px 40px 0px 40px; }
+  .app-container { padding: 30px 40px 80px 40px; } /* Tăng padding-bottom lên 80px */
   .navbar { padding: 15px 40px; }
   .footer { 
     padding: 30px 15px;
@@ -471,9 +569,43 @@ body {
     padding: 20px 10px 50px 10px; 
   }
   .navbar { 
-    /* Synced padding */
-    padding: 10px 10px; 
+    padding: 10px 15px; 
+    flex-wrap: wrap;
+    gap: 10px;
   }
+  .navbar-logo { 
+    order: 1; 
+    font-size: 16px !important;
+    flex-shrink: 0;
+  }
+
+  .tab-button {
+    padding: 4px 10px;
+    font-size: 11px;
+  }
+
+  .theme-toggle-container { 
+    order: 3; 
+    flex-shrink: 0;
+    width: 48px;
+    height: 24px;
+  }
+
+  .theme-toggle-circle {
+    width: 18px;
+    height: 18px;
+  }
+  .theme-toggle-container.dark .theme-toggle-circle {
+    left: 27px; 
+  }
+
+  .tab-navigation { 
+    order: 2; 
+    width: auto !important;
+    gap: 4px;
+    padding: 2px;
+  }
+
   .footer { 
     padding: 30px 10px; 
     text-align: center !important;
@@ -531,9 +663,11 @@ body {
   /* Navbar Smaller */
   .navbar { 
     font-size: 12px !important; 
-    padding: 5px 12px !important; 
-    min-height: 32px;
+    padding: 8px 12px !important; 
+    min-height: 40px;
   }
+  
+  .navbar-logo { font-size: 16px !important; }
   
   /* Make Toggle Button Smaller on Mobile */
   .theme-toggle-container {
@@ -681,6 +815,11 @@ body {
   .dropdown-menu > div[role="menuitem"] {
     font-size: 10px !important;
     padding: 6px 8px !important;
+  }
+
+  .tab-button {
+    padding: 4px 10px;
+    font-size: 11px;
   }
 }
 

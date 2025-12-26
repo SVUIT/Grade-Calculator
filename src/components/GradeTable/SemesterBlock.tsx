@@ -1,6 +1,6 @@
 import React from "react";
 import type { Semester, Course } from "../../types";
-import { calcSemesterAverage } from "../../utils/gradeUtils";
+import { calcSemesterAverage, calcRequiredScores } from "../../utils/gradeUtils";
 import SearchDropdown from "./SearchDropdown";
 import SubjectRow from "./SubjectRow";
 
@@ -106,6 +106,7 @@ const SemesterBlock: React.FC<SemesterBlockProps> = ({
             </span>
 
             {/* Nút Thêm Môn */}
+            <div style={{ position: "relative", display: "inline-flex", alignItems: "center" }}>
             <button
               type="button"
               className="btn-header-action btn-add"
@@ -117,6 +118,7 @@ const SemesterBlock: React.FC<SemesterBlockProps> = ({
               style={{ position: "relative" }}
             >
               + Thêm môn
+              </button>
               {/* DROPDOWN THÊM MÔN */}
               {addDropdownOpen === si && (
                 <SearchDropdown
@@ -165,7 +167,7 @@ const SemesterBlock: React.FC<SemesterBlockProps> = ({
                   }}
                 />
               )}
-            </button>
+            </div>
 
             {/* Nút Xóa Học Kỳ (Trực tiếp) */}
             <button
@@ -221,7 +223,54 @@ const SemesterBlock: React.FC<SemesterBlockProps> = ({
         <td></td>
         <td></td>
         <td style={{ textAlign: "center" }}>{avg.avg}</td>
-        <td></td>
+        <td>
+          <div
+            contentEditable
+            suppressContentEditableWarning
+            data-placeholder={"Nhập điểm kỳ vọng học kỳ"}
+            className="editable-cell expected-score-cell"
+            role="textbox"
+            tabIndex={0}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                e.preventDefault();
+                e.currentTarget.blur();
+              }
+            }}
+            onBlur={(e) => {
+              const text = e.currentTarget.textContent?.trim() || "";
+              if (text === "") return;
+              const xp = Number(text);
+              if (isNaN(xp)) return;
+
+              // For each subject in this semester, if not fully scored, set expectedScore
+              // and compute required component minimums using existing helper.
+              setSemesters((prev) => {
+                const updated = JSON.parse(JSON.stringify(prev));
+                const target = updated[si];
+                if (!target) return prev;
+
+                target.subjects.forEach((sub: any) => {
+                  if (!sub) return;
+                  // skip if all component scores already provided
+                  const hasAll = ["progressScore", "midtermScore", "practiceScore", "finalScore"].every((f) => {
+                    const v = (sub as any)[f];
+                    return v !== undefined && v.toString().trim() !== "";
+                  });
+                  if (hasAll) return;
+
+                  sub.expectedScore = xp.toString();
+                  const required = calcRequiredScores(sub, xp);
+                  Object.entries(required).forEach(([field, value]) => {
+                    (sub as any)[field] = value;
+                  });
+                });
+
+                return updated;
+              });
+            }}
+          />
+        </td>
       </tr>
     </React.Fragment>
   );

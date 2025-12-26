@@ -1,10 +1,15 @@
+import { useState } from "react";
 import Navbar from "../components/Navbar/Navbar";
 import Footer from "../components/Footer/Footer";
 import EditModal from "../components/GradeTable/EditModal";
 import GradeTable from "../components/GradeTable/GradeTable";
 import { useGradeApp } from "../hooks/useGradeApp";
+import Instructions from "../components/Instructions/Instructions";
+
+export type TabType = "grades" | "instructions";
 
 export default function Home() {
+    const [activeTab, setActiveTab] = useState<TabType>("grades");
   const {
     theme,
     toggleTheme,
@@ -42,7 +47,12 @@ export default function Home() {
 
   return (
     <div className={theme === 'light' ? 'light-mode' : ''} style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', width: '100%' }}>
-      <Navbar theme={theme} toggleTheme={toggleTheme} />
+      <Navbar 
+      theme={theme} 
+      toggleTheme={toggleTheme} 
+      activeTab={activeTab} 
+        setActiveTab={setActiveTab}
+      />
 
       <div
         className="app-container"
@@ -53,6 +63,9 @@ export default function Home() {
           setAddDropdownOpen(null);
         }}
       >
+
+        {activeTab === 'grades' ? (
+          <>
         <h1>Bảng điểm</h1>
 
         {/* TABLE CHÍNH VỚI WRAPPER SCROLL */}
@@ -84,6 +97,10 @@ export default function Home() {
             setEditExpandedCategories={setEditExpandedCategories}
           />
         </div>
+        </>
+        ) : (
+          <Instructions />
+        )}
 
         {/* ================== POPUP EDIT ================== */}
         {modalOpen && editing && (

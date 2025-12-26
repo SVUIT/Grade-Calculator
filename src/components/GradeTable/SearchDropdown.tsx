@@ -174,6 +174,7 @@ const SearchDropdown: React.FC<SearchDropdownProps> = ({
             value={searchTerm}
             autoFocus={autoFocus}
             onChange={(e) => setSearchTerm(e.target.value)}
+            onKeyDown={(e) => e.stopPropagation()}
             className="dropdown-input"
             aria-label="Search subjects"
           />

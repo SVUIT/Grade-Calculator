@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import type { Semester, Course } from "../../types";
 import SemesterBlock from "./SemesterBlock";
 import AddSemesterRow from "./AddSemesterRow";
@@ -67,6 +67,22 @@ const GradeTable: React.FC<GradeTableProps> = ({
   editExpandedCategories,
   setEditExpandedCategories,
 }) => {
+
+  useEffect(() => {
+    const handler = (e: Event) => {
+      try {
+        const detail = (e as CustomEvent).detail;
+        if (!detail) return;
+        // Replace semesters with provided updated data
+        setSemesters(detail);
+      } catch (err) {
+        // ignore
+      }
+    };
+
+    window.addEventListener("applyExpectedOverall", handler as EventListener);
+    return () => window.removeEventListener("applyExpectedOverall", handler as EventListener);
+  }, [setSemesters]);
   return (
     <table className="grade-table">
       <colgroup>
