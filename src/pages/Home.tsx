@@ -1,3 +1,5 @@
+"use client";
+
 import Navbar from "../components/Navbar/Navbar";
 import Footer from "../components/Footer/Footer";
 import EditModal from "../components/GradeTable/EditModal";
@@ -197,7 +199,7 @@ export default function Home() {
 
   return (
     <div className={theme === 'light' ? 'light-mode' : ''} style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', width: '100%' }}>
-      <Navbar theme={theme} toggleTheme={toggleTheme} />
+      <Navbar theme={theme as "light" | "dark"} toggleTheme={toggleTheme} />
 
       <div
         className="app-container"

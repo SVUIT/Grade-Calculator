@@ -33,10 +33,11 @@ const createEmptySubject = (): Subject => ({
 
 export const useGradeApp = () => {
   // Theme State
-  const [theme, setTheme] = useState<"light" | "dark">(() => {
-    const savedTheme = localStorage.getItem(THEME_KEY);
-    return (savedTheme as "light" | "dark") || "dark";
-  });
+  let savedTheme: string | null = null;
+if (typeof window !== "undefined") {
+  savedTheme = localStorage.getItem("theme");
+}
+  const [theme, setTheme] = useState<string>(savedTheme === "dark" ? "dark" : "light");
 
   const toggleTheme = () => {
     setTheme((prev) => (prev === "dark" ? "light" : "dark"));
