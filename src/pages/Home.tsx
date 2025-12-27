@@ -8,7 +8,7 @@ import { useGradeApp } from "../hooks/useGradeApp";
 import { uploadPdf } from "../config/appwrite";
 import { useState } from "react";
 import { Subject, ProcessedPdfData, SemesterData, Course } from "../types/index";
-import GraduationCheck from "../components/GraduationCheck/GraduationCheck";
+
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(false);
@@ -238,11 +238,6 @@ export default function Home() {
           </div>
         </div>
         
-        {/* Graduation Check Section */}
-        <div style={{ margin: '40px 0', padding: '20px', border: '1px solid #e0e0e0', borderRadius: '8px' }}>
-          <h2>Kiểm tra tốt nghiệp</h2>
-          <GraduationCheck />
-        </div>
         
         {error && (
           <div style={{ color: 'red', marginBottom: '15px' }}>
