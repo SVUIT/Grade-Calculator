@@ -1,6 +1,7 @@
 // next.config.mjs
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  output: 'standalone',
   distDir: './.next',
   reactStrictMode: false, // Disabled to prevent double-rendering in development
   compiler: {
