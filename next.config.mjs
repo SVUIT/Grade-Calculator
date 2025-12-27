@@ -2,7 +2,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   distDir: './.next',
-  output: 'standalone',
   reactStrictMode: false, // Disabled to prevent double-rendering in development
   compiler: {
     reactRemoveProperties: {
