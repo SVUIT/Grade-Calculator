@@ -1,5 +1,5 @@
 // src/config/appwrite.ts
-export const uploadPdf = async (file: File): Promise<{ grades: any[] }> => {
+export const uploadPdf = async (file: File): Promise<any> => {
   try {
     const formData = new FormData();
     formData.append('file', file);

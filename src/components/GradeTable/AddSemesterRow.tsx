@@ -22,6 +22,8 @@ const AddSemesterRow: React.FC<AddSemesterRowProps> = ({ semesters, setSemesters
               {
                 id: newId,
                 name: "Nhập tên học kỳ",
+                semesterName: "Nhập tên học kỳ",
+                year: new Date().getFullYear().toString(),
                 subjects: [
                   {
                     id: newSubId,

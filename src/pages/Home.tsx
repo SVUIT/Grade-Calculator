@@ -125,6 +125,8 @@ export default function Home() {
       const formattedSemesters = responseData.semesters.map((semester: SemesterData, semIndex: number) => ({
         id: `sem-${Date.now()}-${semIndex}`,
         name: String(semester.semesterName || `Học kỳ ${semIndex + 1}`).trim(),
+        semesterName: String(semester.semesterName || `Học kỳ ${semIndex + 1}`).trim(),
+        year: new Date().getFullYear().toString(),
         subjects: semester.courses ? semester.courses.map((course: Course, index: number) => {
           const scores = course.scores || {};
           return {
@@ -166,6 +168,8 @@ export default function Home() {
             newSemesters.push({
               id: `sem-${Date.now()}`,
               name: 'Học kỳ 1',
+              semesterName: 'Học kỳ 1',
+              year: new Date().getFullYear().toString(),
               subjects: []
             });
           }

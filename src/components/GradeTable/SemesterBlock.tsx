@@ -1,4 +1,5 @@
 import React from "react";
+import { v4 as uuidv4 } from "uuid";
 import type { Semester, Course } from "../../types";
 import { calcSemesterAverage } from "../../utils/gradeUtils";
 import SearchDropdown from "./SearchDropdown";
@@ -137,7 +138,7 @@ const SemesterBlock: React.FC<SemesterBlockProps> = ({
                           const wCK = course.defaultWeights?.finalTermWeight !== undefined ? (course.defaultWeights.finalTermWeight * 100).toString() : "40";
 
                           updated[si].subjects.push({
-                              id: `sub-${self.crypto.randomUUID()}`,
+                              id: `sub-${uuidv4()}`,
                               courseCode: course.courseCode,
                               courseName: course.courseNameVi,
                               credits: course.credits !== undefined ? course.credits.toString() : "",

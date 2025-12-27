@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { v4 as uuidv4 } from "uuid";
 import type { Semester, Subject } from "../types";
 import { getSearchResults, normalizeScore } from "../utils/gradeUtils";
 import { SUBJECTS_DATA } from "../constants";
@@ -7,7 +8,7 @@ const LOCAL_STORAGE_KEY = "grade_app_semesters";
 const THEME_KEY = "grade_app_theme";
 
 // Helper to generate unique ID
-const generateId = (prefix = "sem") => `${prefix}-${self.crypto.randomUUID()}`;
+const generateId = (prefix = "sem") => `${prefix}-${uuidv4()}`;
 
 // Default empty subject based on new schema
 const createEmptySubject = (): Subject => ({
@@ -33,74 +34,86 @@ const createEmptySubject = (): Subject => ({
 
 export const useGradeApp = () => {
   // Theme State
-  const [theme, setTheme] = useState<"light" | "dark">(() => {
-    const savedTheme = localStorage.getItem(THEME_KEY);
-    return (savedTheme as "light" | "dark") || "dark";
-  });
+  const [theme, setTheme] = useState<"light" | "dark">("dark");
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const savedTheme = localStorage.getItem(THEME_KEY);
+      if (savedTheme) {
+        setTheme(savedTheme as "light" | "dark");
+      }
+    }
+  }, []);
 
   const toggleTheme = () => {
     setTheme((prev) => (prev === "dark" ? "light" : "dark"));
   };
 
   useEffect(() => {
-    localStorage.setItem(THEME_KEY, theme);
-    document.body.className = theme === "light" ? "light-mode" : "";
+    if (typeof window !== "undefined") {
+      localStorage.setItem(THEME_KEY, theme);
+      document.body.className = theme === "light" ? "light-mode" : "";
+    }
   }, [theme]);
 
-  const [semesters, setSemesters] = useState<Semester[]>(() => {
-    try {
-      const saved = localStorage.getItem(LOCAL_STORAGE_KEY);
-      if (saved) {
-        const parsed = JSON.parse(saved);
-        
-        // Simple migration check: if data uses old key 'maHP', map it to new schema
-        return parsed.map((s: any) => ({
-          ...s,
-          id: s.id || generateId("sem"),
-          subjects: s.subjects.map((sub: any) => {
-            if (sub.maHP !== undefined) {
-              // Map old structure to new structure
+  const [semesters, setSemesters] = useState<Semester[]>([
+    {
+      id: generateId("sem"),
+      name: "Học kỳ 1",
+      semesterName: "Học kỳ 1",
+      year: new Date().getFullYear().toString(),
+      subjects: [createEmptySubject()],
+    },
+  ]);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      try {
+        const saved = localStorage.getItem(LOCAL_STORAGE_KEY);
+        if (saved) {
+          const parsed = JSON.parse(saved);
+
+          // Simple migration check: if data uses old key 'maHP', map it to new schema
+          const loadedSemesters = parsed.map((s: any) => ({
+            ...s,
+            id: s.id || generateId("sem"),
+            subjects: s.subjects.map((sub: any) => {
+              if (sub.maHP !== undefined) {
+                // Map old structure to new structure
+                return {
+                  id: sub.id || generateId("sub"),
+                  courseCode: sub.maHP,
+                  courseName: sub.tenHP,
+                  credits: sub.tinChi,
+                  progressScore: sub.diemQT,
+                  midtermScore: sub.diemGK,
+                  practiceScore: sub.diemTH,
+                  finalScore: sub.diemCK,
+                  minProgressScore: sub.min_diemQT || "",
+                  minMidtermScore: sub.min_diemGK || "",
+                  minPracticeScore: sub.min_diemTH || "",
+                  minFinalScore: sub.min_diemCK || "",
+                  progressWeight: sub.weight_diemQT || "20",
+                  midtermWeight: sub.weight_diemGK || "20",
+                  practiceWeight: sub.weight_diemTH || "20",
+                  finalWeight: sub.weight_diemCK || "40",
+                  score: sub.diemHP,
+                  expectedScore: sub.expectedScore
+                };
+              }
               return {
-                id: sub.id || generateId("sub"),
-                courseCode: sub.maHP,
-                courseName: sub.tenHP,
-                credits: sub.tinChi,
-                progressScore: sub.diemQT,
-                midtermScore: sub.diemGK,
-                practiceScore: sub.diemTH,
-                finalScore: sub.diemCK,
-                minProgressScore: sub.min_diemQT || "",
-                minMidtermScore: sub.min_diemGK || "",
-                minPracticeScore: sub.min_diemTH || "",
-                minFinalScore: sub.min_diemCK || "",
-                progressWeight: sub.weight_diemQT || "20",
-                midtermWeight: sub.weight_diemGK || "20",
-                practiceWeight: sub.weight_diemTH || "20",
-                finalWeight: sub.weight_diemCK || "40",
-                score: sub.diemHP,
-                expectedScore: sub.expectedScore
+                 ...sub,
+                 id: sub.id || generateId("sub")
               };
-            }
-            return {
-               ...sub,
-               id: sub.id || generateId("sub")
-            };
-          })
-        }));
+            })
+          }));
+          setSemesters(loadedSemesters);
+        }
+      } catch (error) {
+        console.error("Error reading from local storage:", error);
       }
-    } catch (error) {
-      console.error("Error reading from local storage:", error);
     }
-    
-    // Default initial state
-    return [
-      {
-        id: generateId("sem"),
-        name: "Học kỳ 1",
-        subjects: [createEmptySubject()],
-      },
-    ];
-  });
+  }, []);
 
   // Save to local storage whenever semesters changes
   useEffect(() => {
