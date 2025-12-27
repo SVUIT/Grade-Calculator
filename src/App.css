@@ -1,0 +1,706 @@
+#root {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/* ================== CSS VARIABLES & THEMING ================== */
+:root {
+  /* Default Dark Mode */
+  --bg-body: #27262B;
+  --bg-container: #27262B;
+  --text-color: #ffffff;
+  --border-color: #515058;
+  --primary-purple: #711aff;
+  --header-text: #ffffff;
+  --dropdown-bg: #2B2D31;
+  --dropdown-item-hover: #3F3F46;
+  --input-bg: #3F3F46;
+  --modal-bg: #1e1e1e;
+  --text-muted: #999;
+  --dropdown-border: #454545;
+}
+
+.light-mode {
+  /* Light Mode Overrides */
+  --bg-body: #ffffff;
+  --bg-container: #ffffff;
+  --text-color: #000000;
+  --border-color: #C1C1C1;
+  --primary-purple: #9D00FF;
+  --header-text: #ffffff;
+  --dropdown-bg: #f5f5f5;
+  --dropdown-item-hover: #e0e0e0;
+  --input-bg: #e0e0e0;
+  --modal-bg: #ffffff;
+  --text-muted: #555;
+  --dropdown-border: #ccc;
+}
+
+body {
+  background-color: var(--bg-body) !important;
+  color: var(--text-color);
+  transition: background-color 0.3s, color 0.3s;
+  overflow-x: hidden; /* Prevent body scroll, handle in app-container */
+}
+
+/* Global Layout */
+.app-container {
+  width: 100%;
+  max-width: 1400px; /* Limit max width on huge screens */
+  margin: 0 auto;
+  /* Responsive Padding: Increased significantly for "breathing room" */
+  padding: 40px 15% 40px 15%; 
+  flex: 1;
+  box-sizing: border-box;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--bg-container);
+}
+
+/* Table Wrapper */
+.table-wrapper {
+  width: 100%;
+  /* 
+     We use overflow-x: visible to allow the "3-dots" menu 
+     (which is absolute positioned outside the table) to be seen.
+     The table is designed to fit 100% width.
+  */
+  overflow-x: visible; 
+  padding-bottom: 10px;
+  border-radius: 6px;
+}
+
+/* Navbar & Footer */
+.navbar {
+  background: var(--bg-container);
+  padding: 15px 15%; /* Synced with app-container padding */
+  border-bottom: 1px solid #4f4f4f;
+  color: var(--text-color);
+  font-weight: bold;
+  font-size: 20px;
+}
+.light-mode .navbar {
+    background: #f0f0f0;
+    border-bottom: 1px solid #ccc;
+}
+
+.footer {
+  background: var(--bg-container);
+  border-top: 1px solid #4f4f4f;
+  margin-top: auto; /* Push to bottom */
+  padding: 40px 20px;
+  
+  /* Flex settings for Centered Column Layout */
+  display: flex;
+  flex-direction: column; /* Stack items vertically */
+  align-items: center;    /* Center items horizontally */
+  justify-content: center;
+  gap: 24px;              /* Consistent spacing between Title, Links, Icons, etc. */
+}
+
+/* New specific classes for footer elements to ensure layout robustness */
+.footer-links {
+  display: flex;
+  gap: 40px; /* Equivalent to gap-10 */
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.footer-icons {
+  display: flex;
+  gap: 24px; /* Equivalent to gap-6 */
+  align-items: center;
+}
+
+.light-mode .footer {
+    background: #f0f0f0;
+    border-top: 1px solid #ccc;
+}
+.light-mode .footer h2,
+.light-mode .footer a {
+    color: #333 !important;
+}
+.light-mode .footer a:hover {
+    color: var(--primary-purple) !important;
+}
+
+/* Header centering */
+.app-container h1 {
+  text-align: center;
+  margin-bottom: 30px;
+  color: var(--text-color);
+  font-size: 3rem;
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+/* Table Styles */
+.grade-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: transparent;
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+  border-radius: 6px 6px 0 0;
+  table-layout: fixed; /* Keep fixed to respect col widths */
+  font-size: 14px;
+  /* Removed min-width: 800px to prevent overflow on smaller laptops/tablets */
+  min-width: auto; 
+}
+
+/* Column Widths */
+.col-stt { width: 40px; }
+.col-mahp { width: 80px; }
+.col-tenhp { width: 25%; min-width: 150px; } /* Slightly reduced min-width */
+.col-tc { width: 50px; }
+.col-score { width: 60px; }
+.col-diemhp { width: 80px; }
+.col-expected { width: 90px; }
+
+.grade-table th {
+  border-right: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--border-color);
+  color: #ffffff !important;
+  background: var(--primary-purple);
+  padding: 10px 8px;
+  white-space: normal;
+  vertical-align: middle;
+  font-weight: 600;
+}
+
+.grade-table th:first-child { border-top-left-radius: 5px; }
+.grade-table th:last-child { border-top-right-radius: 5px; border-right: none; }
+
+.grade-table td {
+  border-right: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--border-color);
+  padding: 8px 6px;
+  vertical-align: middle;
+  color: var(--text-color);
+}
+
+.grade-table td:last-child { border-right: none; }
+.grade-table tr:last-child td { border-bottom: none; }
+
+/* Semester Rows */
+.semester-bg {
+  background: var(--primary-purple);
+  color: #ffffff !important;
+}
+
+.semester-title {
+  background: transparent;
+  font-weight: bold;
+  color: var(--text-color);
+}
+
+/* New classes for buttons and labels */
+.semester-header-td {
+  padding-left: 12px !important;
+  position: relative;
+}
+
+.btn-header-action {
+  font-size: 12px;
+  padding: 4px 8px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  white-space: nowrap;
+  border-radius: 4px;
+}
+
+.btn-add {
+  color: #8C8C8C;
+  margin-left: 10px;
+}
+
+.btn-delete {
+  color: #ff4d4f;
+  margin-left: 4px;
+}
+
+.summary-label {
+  padding-left: 12px !important;
+}
+
+/* Inputs & Editables */
+.editable-cell {
+  width: 100%;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: var(--text-color);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: pointer;
+  min-height: 20px;
+  line-height: 1.4;
+}
+
+.editable-cell-multiline {
+  white-space: normal;
+  overflow-wrap: break-word;
+}
+
+/* Special styling for Expected Score */
+.expected-score-cell {
+  white-space: pre-wrap;
+  overflow: visible;
+  line-height: 1.2;
+  font-size: 13px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+  padding-right: 0;
+  box-sizing: border-box;
+}
+
+/* 3-Dots Action Menu */
+.row-action-dots {
+  cursor: pointer;
+  font-size: 18px;
+  padding: 4px;
+  position: absolute;
+  right: -26px; /* Default desktop overhang */
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 5;
+  color: #888;
+  width: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Score Cells */
+.score-cell {
+  text-align: center;
+  vertical-align: middle;
+  padding: 4px;
+}
+
+.score-content {
+  width: 100%;
+  border: none;
+  outline: none;
+  background: transparent;
+  white-space: normal;
+  overflow-wrap: break-word;
+  cursor: text;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Theme Toggle Component Styles */
+.theme-toggle-container {
+  width: 60px;
+  height: 30px;
+  background: #4f4f4f;
+  border-radius: 30px;
+  position: relative;
+  cursor: pointer;
+  padding: 0 5px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: background 0.3s;
+  box-sizing: border-box;
+}
+
+.toggle-icon-placeholder {
+  font-size: 14px;
+}
+.theme-toggle-container.dark .toggle-icon-placeholder.left { opacity: 0.5; }
+.theme-toggle-container.light .toggle-icon-placeholder.right { opacity: 0.5; }
+
+.theme-toggle-circle {
+  position: absolute;
+  top: 3px;
+  left: 3px; /* Light Mode Default */
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: #fff;
+  transition: left 0.3s ease-in-out;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.theme-toggle-container.dark .theme-toggle-circle {
+  left: 33px; /* 60px - 24px - 3px */
+}
+
+/* Utilities */
+.text-white { color: #ffffff !important; }
+.text-normal { color: var(--text-color); }
+.score-over-10 { color: #FF4D4F; font-weight: bold; } /* Default/Dark Mode Red (High Contrast on Dark) */
+.light-mode .score-over-10 { color: #CF1322; } /* Light Mode Red (High Contrast on White) */
+.text-yellow { color: yellow; }
+.light-mode .text-yellow { color: #d32f2f; }
+.text-gray { color: #888; }
+.cursor-not-allowed { cursor: not-allowed; }
+
+[data-placeholder]:empty:before {
+  content: attr(data-placeholder);
+  color: var(--text-muted);
+  font-style: italic;
+  font-size: 0.9em;
+  white-space: pre-wrap;
+}
+
+/* ================== DROPDOWNS ================== */
+.dropdown-menu {
+  position: absolute;
+  top: 35px;
+  left: 0;
+  background: var(--dropdown-bg);
+  border: 1px solid var(--dropdown-border);
+  border-radius: 8px;
+  z-index: 20;
+  max-height: 400px;
+  overflow-y: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+}
+
+.dropdown-search-container {
+  padding: 8px;
+  border-bottom: 1px solid var(--dropdown-border);
+  background: var(--dropdown-bg);
+  border-radius: 8px 8px 0 0;
+}
+
+.search-input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    background: var(--input-bg);
+    border-radius: 6px;
+    padding: 0 8px;
+}
+
+.search-icon { color: #A1A1AA; min-width: 14px; margin-right: 6px; }
+
+.dropdown-input {
+  width: 100%;
+  padding: 8px 0;
+  background: transparent;
+  border: none;
+  color: var(--text-color);
+  outline: none;
+  font-size: 13px;
+}
+.dropdown-input::placeholder { color: #A1A1AA; }
+
+.dropdown-content { overflow-y: auto; max-height: 350px; }
+
+.category-header {
+  padding: 8px 12px;
+  background: transparent;
+  color: var(--text-color);
+  font-weight: 700;
+  font-size: 13px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  user-select: none;
+}
+.category-header:hover { background: rgba(255, 255, 255, 0.05); }
+.light-mode .category-header:hover { background: rgba(0, 0, 0, 0.05); }
+
+.subject-list { background: rgba(0, 0, 0, 0.2); }
+.light-mode .subject-list { background: rgba(0, 0, 0, 0.03); }
+
+.subject-item {
+  padding: 8px 12px 8px 20px;
+  cursor: pointer;
+  color: var(--text-color);
+  font-size: 13px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  border-left: 2px solid transparent;
+}
+.subject-item:hover {
+  background: var(--dropdown-item-hover);
+  border-left: 2px solid var(--primary-purple);
+}
+.subject-code { font-weight: 700; min-width: 45px; color: var(--text-color); }
+.subject-name { color: var(--text-color); opacity: 0.9; }
+
+/* ================= RESPONSIVE ================= */
+@media (max-width: 1024px) {
+  /* Tablet/Small Desktop: Reduce padding significantly to fit the table */
+  /* Reduced bottom padding to 0 to bring footer closer */
+  .app-container { padding: 30px 40px 0px 40px; }
+  .navbar { padding: 15px 40px; }
+  .footer { 
+    padding: 30px 15px;
+    /* text-align center inherited from main .footer */
+  }
+  
+  /* Remove table wrapper padding to reduce gap further */
+  .table-wrapper { padding-bottom: 0; }
+
+  /* COMPACT COLUMNS FOR TABLET: Shrink widths to prevent overflow */
+  .col-mahp { width: 70px; }
+  .col-score { width: 45px; } /* 4 cols * 45 = 180px */
+  .col-diemhp { width: 65px; }
+  .col-expected { width: 75px; }
+  /* Allow TenHP to shrink a bit more but keep it readable */
+  .col-tenhp { min-width: 120px; }
+}
+
+@media (max-width: 768px) {
+  /* Tablet Portrait: Smaller padding */
+  .app-container { 
+    /* Reduced padding to 10px on both sides to prevent 'short' look and maximize space */
+    padding: 20px 10px 50px 10px; 
+  }
+  .navbar { 
+    /* Synced padding */
+    padding: 10px 10px; 
+  }
+  .footer { 
+    padding: 30px 10px; 
+    text-align: center !important;
+  }
+  .app-container h1 { font-size: 2rem; margin-bottom: 20px; }
+
+  /* Allow table to scroll internally */
+  .table-wrapper {
+    overflow-x: visible !important;
+    padding-right: 0;
+  }
+  
+  /* Shrink table width to allow space for the floating dots (approx 30px) */
+  .grade-table {
+    width: calc(100% - 10px) !important;
+    /* Remove any right margin that might push it out */
+    margin-right: 0;
+  }
+
+  /* Compact Columns for 768px range to ensure fit without scroll */
+  .col-stt { width: 30px; }
+  .col-mahp { width: 55px; }
+  .col-tenhp { min-width: 100px; }
+  .col-tc { width: 35px; }
+  .col-score { width: 35px; } 
+  .col-diemhp { width: 50px; }
+  .col-expected { width: 60px; }
+
+  .grade-table th, .grade-table td {
+    padding: 6px 4px; /* Reduced padding */
+    font-size: 11px; /* Smaller font */
+  }
+  
+  /* Adjust inputs font size */
+  .editable-cell, .score-content, .expected-score-cell, input {
+    font-size: 11px;
+  }
+}
+
+/* MOBILE FIT SCREEN - AGGRESSIVE RESIZING */
+@media (max-width: 480px) {
+  .app-container { 
+    /* Balanced Padding for Mobile - Symmetric and enough for dots */
+    padding: 10px 12px 10px 12px !important; 
+    width: 100%;
+    overflow-x: hidden;
+  }
+  
+  /* Remove wrapper padding */
+  .table-wrapper { 
+    padding-bottom: 0;
+    overflow-x: visible !important;
+ }
+  
+  /* Navbar Smaller */
+  .navbar { 
+    font-size: 12px !important; 
+    padding: 5px 12px !important; 
+    min-height: 32px;
+  }
+  
+  /* Make Toggle Button Smaller on Mobile */
+  .theme-toggle-container {
+    width: 42px;
+    height: 22px;
+  }
+  .theme-toggle-circle {
+    width: 16px;
+    height: 16px;
+    top: 3px;
+    left: 3px;
+  }
+  .theme-toggle-container.dark .theme-toggle-circle {
+    left: 23px; /* 42 - 16 - 3 */
+  }
+
+  /* Adjust hanging dots to be closer since padding is tighter */
+  .row-action-dots {
+    right: -26px;
+  }
+  
+  .app-container h1 { font-size: 1.2rem; margin-bottom: 10px; }
+
+  /* 
+     On mobile, force table to be slightly narrower than container 
+     so the floating dots (-26px) are visible without horizontal scrolling 
+     if the columns fit.
+  */
+  .grade-table { 
+    width: calc(100% - 10px) !important; 
+    min-width: 0; 
+    font-size: 9px; 
+    margin-right: 0 !important;
+  }
+
+  .grade-table th, .grade-table td {
+    padding: 2px 1px; /* Minimal padding */
+  }
+
+  /* Reduce font size for buttons and summary labels on mobile */
+  .btn-header-action {
+    font-size: 8px !important; /* Reduced from 9px */
+    padding: 1px 3px !important;
+  }
+  .btn-add { margin-left: 5px !important; }
+  .btn-delete { margin-left: 2px !important; }
+
+  .semester-header-td { padding-left: 2px !important; }
+  
+  /* Semester Title - Smaller */
+  .semester-title span { 
+    font-size: 9px !important; /* Reduced from 10px */
+    font-weight: 700; 
+  }
+
+  /* Summary Labels - Prevent wrapping/Small size */
+  .summary-label { 
+    font-size: 7px !important; /* Reduced from 8px */
+    padding-left: 2px !important; 
+    line-height: 1.1;
+    white-space: normal; /* Allow wrap but tight */
+  }
+
+  /* Ultra-compact columns for Mobile */
+  .col-stt { width: 20px; }
+  .col-mahp { width: 40px; }
+  .col-tc { width: 22px; }
+  .col-score { width: 25px; } 
+  .col-diemhp { width: 35px; }
+  .col-expected { width: 45px; } 
+  
+  /* Name column takes remaining space */
+  .col-tenhp { 
+    width: auto; 
+    min-width: 50px; 
+  }
+
+  /* Text Sizes */
+  .editable-cell, .score-content, .expected-score-cell, input {
+    font-size: 8px; /* Reduced from 9px */
+    min-height: 14px;
+  }
+  
+  /* Placeholders smaller */
+  [data-placeholder]:empty:before { font-size: 8px; }
+
+  /* Footer smaller */
+  .footer { 
+    padding: 10px 5px !important; 
+    font-size: 10px !important;
+    gap: 15px !important; /* Reduced from 24px */
+  }
+
+  .footer-links {
+    gap: 15px !important; /* Force smaller gap on mobile */
+  }
+
+  .footer-icons {
+    gap: 12px !important;
+  }
+
+  /* Override Tailwind Font Sizes in Footer */
+  .footer h2 { font-size: 12px !important; margin: 0; }
+  .footer a { font-size: 10px !important; }
+
+  .dropdown-menu {
+    min-width: 140px !important; 
+    max-width: 240px !important;
+  }
+
+  /* Shrink header & search box */
+  .dropdown-search-container {
+    padding: 5px !important;
+  }
+
+  .dropdown-input {
+    font-size: 11px !important;
+    padding: 4px 0 !important;
+  }
+  .search-input-wrapper {
+    padding: 0 5px !important;
+  }
+  .search-icon {
+    width: 10px !important;
+    height: 10px !important;
+    min-width: 10px !important;
+    margin-right: 4px !important;
+  }
+
+  /* Shrink Items */
+  .category-header {
+    font-size: 10px !important;
+    padding: 5px 8px !important;
+  }
+  .subject-item {
+    font-size: 10px !important;
+    padding: 6px 8px !important;
+  }
+  .subject-code {
+    font-size: 10px !important;
+    min-width: 35px !important;
+  }
+
+  /* Specific fix for the manual 3-dots items if they use styles */
+  .dropdown-menu > div[role="menuitem"] {
+    font-size: 10px !important;
+    padding: 6px 8px !important;
+  }
+}
+
+/* Footer Icons Responsive Sizing */
+.footer-icon-fb {
+  width: 12px;
+  height: 12px;
+}
+.footer-icon-std {
+  width: 14px;
+  height: 14px;
+}
+
+@media (min-width: 768px) {
+  .footer-icon-fb {
+    width: 17px;
+    height: 17px;
+  }
+  .footer-icon-std {
+    width: 20px;
+    height: 20px;
+  }
+}
