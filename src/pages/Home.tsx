@@ -5,37 +5,8 @@ import GradeTable from "../components/GradeTable/GradeTable";
 import { useGradeApp } from "../hooks/useGradeApp";
 import { uploadPdf } from "../config/appwrite";
 import { useState } from "react";
-import type { Subject } from "../types";
+import { Subject, ProcessedPdfData, SemesterData, Course } from "../types/index";
 import GraduationCheck from "../components/GraduationCheck/GraduationCheck";
-
-// Type definitions for PDF processing
-interface CourseScores {
-  progressScore?: number;
-  midtermScore?: number;
-  practiceScore?: number;
-  finaltermScore?: number;
-  totalScore?: number;
-}
-
-interface Course {
-  courseCode: string;
-  courseNameVi: string;
-  credits: number;
-  scores: CourseScores;
-}
-
-interface SemesterData {
-  semesterName: string;
-  courses: Course[];
-}
-
-interface ProcessedPdfData {
-  semesters: SemesterData[];
-  courseCode?: string;
-  courseNameVi?: string;
-  credits?: number;
-  scores?: CourseScores;
-}
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(false);
@@ -122,33 +93,43 @@ export default function Home() {
       }
 
       // Transform the parsed data to match our expected format
-      const formattedSemesters = responseData.semesters.map((semester: SemesterData, semIndex: number) => ({
-        id: `sem-${Date.now()}-${semIndex}`,
-        name: String(semester.semesterName || `Học kỳ ${semIndex + 1}`).trim(),
-        subjects: semester.courses ? semester.courses.map((course: Course, index: number) => {
-          const scores = course.scores || {};
-          return {
-            id: `subj-${Date.now()}-${semIndex}-${index}`,
-            courseCode: String(course.courseCode || '').trim(),
-            courseName: String(course.courseNameVi || '').trim(),
-            credits: course.credits?.toString() || '0',
-            progressScore: scores.progressScore !== null && scores.progressScore !== undefined ? String(scores.progressScore) : '',
-            midtermScore: scores.midtermScore !== null && scores.midtermScore !== undefined ? String(scores.midtermScore) : '',
-            practiceScore: scores.practiceScore !== null && scores.practiceScore !== undefined ? String(scores.practiceScore) : '',
-            finalScore: scores.finaltermScore !== null && scores.finaltermScore !== undefined ? String(scores.finaltermScore) : '',
-            minProgressScore: '0',
-            minMidtermScore: '0',
-            minPracticeScore: '0',
-            minFinalScore: '0',
-            progressWeight: '20',
-            midtermWeight: '20',
-            practiceWeight: '20',
-            finalWeight: '40',
-            score: scores.totalScore !== null && scores.totalScore !== undefined ? String(scores.totalScore) : '',
-            expectedScore: ''
-          };
-        }) : []
-      }));
+      const formattedSemesters = responseData.semesters.map((semester: SemesterData, semIndex: number) => {
+        // Extract year from semester name if possible, or use current year as fallback
+        const yearMatch = String(semester.semesterName || '').match(/(\d{4})/);
+        const year = yearMatch ? yearMatch[0] : new Date().getFullYear().toString();
+        
+        return {
+          id: `sem-${Date.now()}-${semIndex}`,
+          name: String(semester.semesterName || `Học kỳ ${semIndex + 1}`).trim(),
+          semesterName: String(semester.semesterName || `Học kỳ ${semIndex + 1}`).trim(),
+          year: year,
+          subjects: semester.courses ? semester.courses.map((course: Course, index: number) => {
+            const scores = course.scores || {};
+            return {
+              id: `subj-${Date.now()}-${semIndex}-${index}`,
+              courseCode: String(course.courseCode || '').trim(),
+              courseName: String(course.courseNameVi || '').trim(),
+              credits: course.credits?.toString() || '0',
+              progressScore: scores.progressScore !== null && scores.progressScore !== undefined ? String(scores.progressScore) : '',
+              midtermScore: scores.midtermScore !== null && scores.midtermScore !== undefined ? String(scores.midtermScore) : '',
+              practiceScore: scores.practiceScore !== null && scores.practiceScore !== undefined ? String(scores.practiceScore) : '',
+              finalScore: scores.finaltermScore !== null && scores.finaltermScore !== undefined ? String(scores.finaltermScore) : '',
+              minProgressScore: '0',
+              minMidtermScore: '0',
+              minPracticeScore: '0',
+              minFinalScore: '0',
+              progressWeight: '20',
+              midtermWeight: '20',
+              practiceWeight: '20',
+              finalWeight: '40',
+              score: scores.totalScore !== null && scores.totalScore !== undefined ? String(scores.totalScore) : '',
+              expectedScore: ''
+            };
+          }) : [],
+          semesterSummary: undefined,
+          cumulativeSummary: undefined
+        };
+      });
       
       // Update the state with the new semesters
       if (formattedSemesters.length > 0) {
@@ -166,6 +147,8 @@ export default function Home() {
             newSemesters.push({
               id: `sem-${Date.now()}`,
               name: 'Học kỳ 1',
+              semesterName: 'Học kỳ 1',
+              year: '2025',
               subjects: []
             });
           }

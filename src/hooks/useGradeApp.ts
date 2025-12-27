@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import type { Semester, Subject } from "../types";
+import type { Semester, Subject } from "../types/index";
 import { getSearchResults, normalizeScore } from "../utils/gradeUtils";
 import { SUBJECTS_DATA } from "../constants";
 

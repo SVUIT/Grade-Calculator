@@ -1,4 +1,4 @@
-import type { Subject, Course } from "../types";
+import type { Subject, Course } from "../types/index";
 
 // ================== AUTO CALCULATE - ĐIỂM HP =================
 export const calcSubjectScore = (subj: Partial<Subject>): string => {

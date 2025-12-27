@@ -1,9 +1,21 @@
+// src/types/index.ts
+
+// Course related types
+export interface CourseScores {
+  progressScore?: number;
+  midtermScore?: number;
+  practiceScore?: number;
+  finaltermScore?: number;
+  totalScore?: number;
+}
+
 export interface Course {
   courseCode: string;
   courseNameEn: string;
   courseNameVi: string;
   courseType: string;
   credits: number;
+  scores?: CourseScores;
   defaultWeights: {
     progressWeight: number;
     practiceWeight: number;
@@ -17,25 +29,18 @@ export interface Subject {
   courseCode: string;
   courseName: string;
   credits: string; // kept as string for UI compatibility
-
-  // Scores
   progressScore: string;
   practiceScore: string;
   midtermScore: string;
   finalScore: string; // Maps to finaltermScore
-
-  // Min Scores (calculated)
   minProgressScore: string;
   minPracticeScore: string;
   minMidtermScore: string;
   minFinalScore: string;
-
-  // Weights (0-100 strings for UI)
   progressWeight: string;
   practiceWeight: string;
   midtermWeight: string;
   finalWeight: string; // Maps to finalTermWeight
-
   score: string; // diemHP
   expectedScore: string;
   [key: string]: any;
@@ -48,7 +53,8 @@ export interface SemesterSummary {
 
 export interface CumulativeSummary {
   totalCreditsAccumulated: number;
-  cumulativeGpa: number;
+  gpa: number;
+  cumulativeGpa?: number; // For backward compatibility
 }
 
 export interface Semester {
@@ -59,4 +65,35 @@ export interface Semester {
   subjects: Subject[];
   semesterSummary?: SemesterSummary;
   cumulativeSummary?: CumulativeSummary;
+}
+
+// PDF processing types
+export interface SemesterData {
+  semesterName: string;
+  courses: Course[];
+}
+
+export interface ProcessedPdfData {
+  semesters: SemesterData[];
+  courseCode?: string;
+  courseNameVi?: string;
+  credits?: number;
+  scores?: CourseScores;
+}
+
+// Academic record types
+export interface AcademicRecord {
+  totalCredits: number;
+  gpa: number;
+  hasFGrade: boolean;
+  completedThesis: boolean;
+  thesisScore?: number;
+  englishProficiency: {
+    type: "IELTS" | "TOEFL" | "TOEIC" | "VSTEP" | "UIT";
+    score: number;
+  };
+  completedMilitaryTraining: boolean;
+  completedPhysicalEducation: boolean;
+  completedSoftSkills: boolean;
+  isUnderDisciplinaryAction: boolean;
 }
