@@ -126,7 +126,8 @@ const SubjectRow: React.FC<SubjectRowProps> = ({
           key={field.key}
           style={{
             position: "relative",
-            textAlign: field.key === "courseCode" || field.key === "credits" ? "center" : "left",
+            textAlign: field.key === "courseCode" ? "center" : "left",
+            alignItems: "center",
           }}
         >
           {(field.key === "courseCode" || field.key === "courseName") && (

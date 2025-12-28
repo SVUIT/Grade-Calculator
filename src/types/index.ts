@@ -69,4 +69,5 @@ export interface Semester {
   id?: string;
   name: string;
   subjects: Subject[];
+  expectedAverage?: string;
 }

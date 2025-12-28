@@ -4,9 +4,17 @@ import { calcSubjectScore, calcRequiredScores } from "../../utils/gradeUtils";
 
 interface SummaryRowsProps {
   semesters: Semester[];
+  cumulativeExpected: string;
+  onApplyExpectedOverall: (updatedSemesters: Semester[]) => void;
+  onSetCumulativeExpected: (value: string) => void;
 }
 
-const SummaryRows: React.FC<SummaryRowsProps> = ({ semesters }) => {
+const SummaryRows: React.FC<SummaryRowsProps> = ({ 
+  semesters, 
+  cumulativeExpected,
+  onApplyExpectedOverall,
+  onSetCumulativeExpected 
+}) => {
   return (
     <>
       {/* 1) Tổng số tín chỉ toàn khóa */}
@@ -17,7 +25,7 @@ const SummaryRows: React.FC<SummaryRowsProps> = ({ semesters }) => {
           {semesters.reduce(
             (sum, sem) =>
               sum +
-              sem.subjects.reduce((a, s) => a + Number(s.tinChi || 0), 0),
+              sem.subjects.reduce((a, s) => a + Number(s.credits || 0), 0),
             0
           )}
         </td>
@@ -54,7 +62,7 @@ const SummaryRows: React.FC<SummaryRowsProps> = ({ semesters }) => {
             semesters.forEach((sem) => {
               sem.subjects.forEach((sub) => {
                 const hp = Number(calcSubjectScore(sub));
-                const tc = Number(sub.tinChi);
+                const tc = Number(sub.credits);
                 if (!isNaN(hp) && !isNaN(tc)) {
                   totalTC += tc;
                   totalScore += hp * tc;
@@ -81,11 +89,15 @@ const SummaryRows: React.FC<SummaryRowsProps> = ({ semesters }) => {
             }}
             onBlur={(e) => {
               const text = e.currentTarget.textContent?.trim() || "";
+              
+              // Lưu giá trị nhập vào (kể cả rỗng)
+              onSetCumulativeExpected(text);
+              
               if (text === "") return;
               const xp = Number(text);
               if (isNaN(xp)) return;
 
-              // Apply expected GPA across all subjects that are not fully scored
+              // Áp dụng điểm kỳ vọng cho tất cả môn chưa có đủ điểm
               const updated = JSON.parse(JSON.stringify(semesters));
               updated.forEach((sem: any) => {
                 sem.subjects.forEach((sub: any) => {
@@ -95,6 +107,7 @@ const SummaryRows: React.FC<SummaryRowsProps> = ({ semesters }) => {
                   });
                   if (hasAll) return;
 
+                  // Lưu expectedScore cho từng môn
                   sub.expectedScore = xp.toString();
                   const required = calcRequiredScores(sub, xp);
                   Object.entries(required).forEach(([field, value]) => {
@@ -103,14 +116,12 @@ const SummaryRows: React.FC<SummaryRowsProps> = ({ semesters }) => {
                 });
               });
 
-              // Write back to local storage via a small event: dispatch a custom event consumers can catch
-              // or simply replace window.localStorage directly here if desired by caller. We'll update by
-              // setting a hidden global - callers using `setSemesters` should be invoked by parent components.
-              // For now, try to update via a small hack: find global setter by dispatching a custom event.
-              const event = new CustomEvent("applyExpectedOverall", { detail: updated });
-              window.dispatchEvent(event as any);
+              // Gọi callback để cập nhật state và localStorage
+              onApplyExpectedOverall(updated);
             }}
-          />
+          >
+            {cumulativeExpected}
+          </div>
         </td>
       </tr>
     </>

@@ -12,11 +12,11 @@ interface SemesterBlockProps {
 
   // Handlers for subjects
   updateSubjectField: (s: number, i: number, f: string, v: string) => void;
-  deleteSemester: (id: string) => void; // Changed to ID
+  deleteSemester: (id: string) => void;
   deleteSubject: (s: number, i: number) => void;
   openAdvancedModal: (s: number, i: number) => void;
 
-  // Menu States (kept for compatibility but unused for semester delete now)
+  // Menu States
   semesterMenuOpen?: number | null;
   setSemesterMenuOpen?: (val: number | null) => void;
 
@@ -127,12 +127,11 @@ const SemesterBlock: React.FC<SemesterBlockProps> = ({
                   searchResults={addSearchResults}
                   expandedCategories={addExpandedCategories}
                   setExpandedCategories={setAddExpandedCategories}
-                  minWidth={260} // Explicitly smaller width for compact UI
+                  minWidth={260}
                   onSelect={(course: Course) => {
                     setSemesters((prev) => {
                       const updated = JSON.parse(JSON.stringify(prev));
                       if (updated[si]) {
-                          // Convert default weights (0.x) to percentage strings
                           const wQT = course.defaultWeights?.progressWeight !== undefined ? (course.defaultWeights.progressWeight * 100).toString() : "20";
                           const wGK = course.defaultWeights?.midtermWeight !== undefined ? (course.defaultWeights.midtermWeight * 100).toString() : "20";
                           const wTH = course.defaultWeights?.practiceWeight !== undefined ? (course.defaultWeights.practiceWeight * 100).toString() : "20";
@@ -169,7 +168,7 @@ const SemesterBlock: React.FC<SemesterBlockProps> = ({
               )}
             </div>
 
-            {/* Nút Xóa Học Kỳ (Trực tiếp) */}
+            {/* Nút Xóa Học Kỳ */}
             <button
               type="button"
               className="btn-header-action btn-delete"
@@ -239,20 +238,23 @@ const SemesterBlock: React.FC<SemesterBlockProps> = ({
             }}
             onBlur={(e) => {
               const text = e.currentTarget.textContent?.trim() || "";
-              if (text === "") return;
-              const xp = Number(text);
-              if (isNaN(xp)) return;
-
-              // For each subject in this semester, if not fully scored, set expectedScore
-              // and compute required component minimums using existing helper.
+              
+              // Lưu giá trị expectedAverage cho học kỳ (kể cả rỗng)
               setSemesters((prev) => {
                 const updated = JSON.parse(JSON.stringify(prev));
                 const target = updated[si];
                 if (!target) return prev;
+                
+                // Lưu giá trị nhập vào
+                target.expectedAverage = text;
 
+                if (text === "") return updated;
+                const xp = Number(text);
+                if (isNaN(xp)) return updated;
+
+                // Áp dụng cho các môn chưa có đủ điểm
                 target.subjects.forEach((sub: any) => {
                   if (!sub) return;
-                  // skip if all component scores already provided
                   const hasAll = ["progressScore", "midtermScore", "practiceScore", "finalScore"].every((f) => {
                     const v = (sub as any)[f];
                     return v !== undefined && v.toString().trim() !== "";
@@ -269,7 +271,9 @@ const SemesterBlock: React.FC<SemesterBlockProps> = ({
                 return updated;
               });
             }}
-          />
+          >
+            {sem.expectedAverage}
+          </div>
         </td>
       </tr>
     </React.Fragment>

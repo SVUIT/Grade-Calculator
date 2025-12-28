@@ -43,7 +43,47 @@ body {
   background-color: var(--bg-body) !important;
   color: var(--text-color);
   transition: background-color 0.3s, color 0.3s;
-  overflow-x: hidden; /* Prevent body scroll, handle in app-container */
+  overflow-x: hidden;
+  height: 100%;
+  margin: 0;
+}
+
+.app-root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* footer nằm đáy */
+.footer {
+  margin-top: auto;
+}
+
+.footer-icon {
+  fill: #2C84FA;
+}
+
+.light-mode .footer-icon {
+  fill: #7253ED; /* Light mode color */
+}
+
+.navbar-logo {
+  display: flex;
+  align-items: center;
+}
+
+/* Logo image */
+.navbar-logo img {
+  width: 36px;
+  height: 36px;
+  object-fit: contain;
+}
+
+/* Text */
+.navbar-logo-text {
+  font-weight: 800;
+  font-size: 20px;
+  white-space: nowrap;
 }
 
 /* Global Layout */
@@ -351,6 +391,7 @@ body {
   overflow-wrap: break-word;
 }
 
+
 /* Special styling for Expected Score */
 .expected-score-cell {
   white-space: pre-wrap;
@@ -387,6 +428,7 @@ body {
 /* Score Cells */
 .score-cell {
   text-align: center;
+  align-items: center;
   vertical-align: middle;
   padding: 4px;
 }
@@ -564,6 +606,10 @@ body {
 @media (min-width: 1280px) {
   .app-container { padding: 40px 8% 40px 8%; }
   .navbar { padding: 12px 8%; }
+
+  .editable-cell-multiline {
+    padding: 0 26px;
+  }
 }
 
 @media (max-width: 1024px) {
@@ -574,6 +620,10 @@ body {
   .footer { 
     padding: 30px 15px;
     /* text-align center inherited from main .footer */
+  }
+
+  .editable-cell-multiline {
+    padding: 0 18px;
   }
   
   /* Remove table wrapper padding to reduce gap further */
@@ -589,6 +639,20 @@ body {
 }
 
 @media (max-width: 768px) {
+
+  .navbar-logo img {
+    width: 32px;
+    height: 32px;
+  }
+
+  .navbar-logo-text {
+    font-size: 18px;
+  }
+
+  .editable-cell-multiline {
+    padding: 0 16px;
+  }
+
   /* Tablet Portrait: Smaller padding */
   .app-container { 
     /* Reduced padding to 10px on both sides to prevent 'short' look and maximize space */
@@ -644,12 +708,6 @@ body {
     padding-right: 0;
   }
   
-  /* Shrink table width to allow space for the floating dots (approx 30px) */
-  .grade-table {
-    width: calc(100% - 10px) !important;
-    /* Remove any right margin that might push it out */
-    margin-right: 0;
-  }
 
   /* Compact Columns for 768px range to ensure fit without scroll */
   .col-stt { width: 30px; }
@@ -679,6 +737,15 @@ body {
 
 /* MOBILE FIT SCREEN - AGGRESSIVE RESIZING */
 @media (max-width: 480px) {
+  .navbar-logo img {
+    width: 28px;
+    height: 28px;
+  }
+
+  .navbar-logo-text {
+    display: none;
+  }
+
   .app-container { 
     /* Balanced Padding for Mobile - Symmetric and enough for dots */
     padding: 10px 12px 10px 12px !important; 
@@ -689,7 +756,8 @@ body {
   /* Remove wrapper padding */
   .table-wrapper { 
     padding-bottom: 0;
-    overflow-x: visible !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch;
  }
   
   /* Navbar Smaller */
@@ -728,20 +796,20 @@ body {
      so the floating dots (-26px) are visible without horizontal scrolling 
      if the columns fit.
   */
-  .grade-table { 
-    width: calc(100% - 10px) !important; 
-    min-width: 0; 
-    font-size: 9px; 
-    margin-right: 0 !important;
+  .grade-table {
+    min-width: 950px !important; /* hoặc 1000px nếu muốn */
+    width: auto !important;
+    font-size: 13px !important;
   }
 
   .grade-table th, .grade-table td {
-    padding: 2px 1px; /* Minimal padding */
+    font-size: 10px !important;
+    padding: 6px 6px !important;  
   }
 
   /* Reduce font size for buttons and summary labels on mobile */
   .btn-header-action {
-    font-size: 8px !important; /* Reduced from 9px */
+    font-size: 9px !important; /* Reduced from 9px */
     padding: 1px 3px !important;
   }
   .btn-add { margin-left: 5px !important; }
@@ -751,25 +819,27 @@ body {
   
   /* Semester Title - Smaller */
   .semester-title span { 
-    font-size: 9px !important; /* Reduced from 10px */
+    font-size: 10px !important; /* Reduced from 10px */
     font-weight: 700; 
   }
 
   /* Summary Labels - Prevent wrapping/Small size */
   .summary-label { 
-    font-size: 7px !important; /* Reduced from 8px */
+    font-size: 7px; /* Reduced from 8px */
     padding-left: 2px !important; 
     line-height: 1.1;
     white-space: normal; /* Allow wrap but tight */
   }
+  
 
   /* Ultra-compact columns for Mobile */
-  .col-stt { width: 20px; }
-  .col-mahp { width: 40px; }
-  .col-tc { width: 22px; }
-  .col-score { width: 25px; } 
-  .col-diemhp { width: 35px; }
-  .col-expected { width: 45px; } 
+  .col-stt { width: 40px !important; }
+  .col-mahp { width: 80px !important; }
+  .col-tc { width: 50px !important; }
+  .col-score { width: 60px !important; }
+  .col-diemhp { width: 80px !important; }
+  .col-expected { width: 90px !important; }
+  .col-tenhp { min-width: 200px !important; }
   
   /* Name column takes remaining space */
   .col-tenhp { 
@@ -779,7 +849,7 @@ body {
 
   /* Text Sizes */
   .editable-cell, .score-content, .expected-score-cell, input {
-    font-size: 8px; /* Reduced from 9px */
+    font-size: 10px; /* Reduced from 9px */
     min-height: 14px;
   }
   

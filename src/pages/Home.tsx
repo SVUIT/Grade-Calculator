@@ -22,6 +22,8 @@ export default function Home() {
     toggleTheme,
     semesters,
     setSemesters,
+    cumulativeExpected,
+    setCumulativeExpected,
     modalOpen,
     setModalOpen,
     editing,
@@ -66,6 +68,7 @@ export default function Home() {
       const formattedSemesters = data.semesters.map((sem, semIndex) => ({
         id: `pdf-sem-${Date.now()}-${semIndex}`,
         name: sem.semesterName,
+        expectedAverage: "", // Thêm expectedAverage
         subjects: sem.courses.map((c, i): Subject => ({
           id: `pdf-sub-${Date.now()}-${i}`,
           courseCode: c.courseCode || "",
@@ -103,7 +106,9 @@ export default function Home() {
   /* ================================================ */
 
   return (
-    <div className={theme === "light" ? "light-mode" : ""} style={{ minHeight: "100vh" }}>
+    <div 
+      className={`app-root ${theme === "light" ? "light-mode" : ""}`}    
+    >
       <Navbar
         theme={theme}
         toggleTheme={toggleTheme}
@@ -111,7 +116,7 @@ export default function Home() {
         setActiveTab={setActiveTab}
       />
 
-      <div
+      <main
         className="app-container"
         onClick={() => {
           setOpenMenu(null);
@@ -154,6 +159,8 @@ export default function Home() {
               <GradeTable
                 semesters={semesters}
                 setSemesters={setSemesters}
+                cumulativeExpected={cumulativeExpected}
+                setCumulativeExpected={setCumulativeExpected}
                 updateSubjectField={updateSubjectField}
                 deleteSemester={deleteSemester}
                 deleteSubject={deleteSubject}
@@ -196,7 +203,7 @@ export default function Home() {
             backupSubject={backupSubject}
           />
         )}
-      </div>
+      </main>
 
       <Footer />
     </div>

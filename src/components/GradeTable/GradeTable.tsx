@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import type { Semester, Course } from "../../types";
 import SemesterBlock from "./SemesterBlock";
 import AddSemesterRow from "./AddSemesterRow";
@@ -7,6 +7,8 @@ import SummaryRows from "./SummaryRows";
 interface GradeTableProps {
   semesters: Semester[];
   setSemesters: (semesters: Semester[] | ((prev: Semester[]) => Semester[])) => void;
+  cumulativeExpected: string;
+  setCumulativeExpected: (value: string) => void;
   updateSubjectField: (s: number, i: number, f: string, v: string) => void;
   deleteSemester: (id: string) => void;
   deleteSubject: (s: number, i: number) => void;
@@ -40,6 +42,8 @@ interface GradeTableProps {
 const GradeTable: React.FC<GradeTableProps> = ({
   semesters,
   setSemesters,
+  cumulativeExpected,
+  setCumulativeExpected,
   updateSubjectField,
   deleteSemester,
   deleteSubject,
@@ -63,18 +67,10 @@ const GradeTable: React.FC<GradeTableProps> = ({
   editExpandedCategories,
   setEditExpandedCategories,
 }) => {
-  useEffect(() => {
-    const handler = (e: Event) => {
-      try {
-        const detail = (e as CustomEvent).detail;
-        if (detail) setSemesters(detail);
-      } catch {}
-    };
-
-    window.addEventListener("applyExpectedOverall", handler as EventListener);
-    return () =>
-      window.removeEventListener("applyExpectedOverall", handler as EventListener);
-  }, [setSemesters]);
+  // Handler để cập nhật semesters khi SummaryRows thay đổi điểm kỳ vọng
+  const handleApplyExpectedOverall = (updatedSemesters: Semester[]) => {
+    setSemesters(updatedSemesters);
+  };
 
   return (
     <table className="grade-table">
@@ -141,7 +137,12 @@ const GradeTable: React.FC<GradeTableProps> = ({
         ))}
 
         <AddSemesterRow semesters={semesters} setSemesters={setSemesters} />
-        <SummaryRows semesters={semesters} />
+        <SummaryRows 
+          semesters={semesters}
+          cumulativeExpected={cumulativeExpected}
+          onApplyExpectedOverall={handleApplyExpectedOverall}
+          onSetCumulativeExpected={setCumulativeExpected}
+        />
       </tbody>
     </table>
   );

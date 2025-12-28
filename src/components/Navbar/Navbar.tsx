@@ -9,19 +9,61 @@ interface NavbarProps {
   setActiveTab: (tab: TabType) => void;
 }
 
-const Navbar: React.FC<NavbarProps> = ({ theme, toggleTheme, activeTab, setActiveTab }) => {
+const Navbar: React.FC<NavbarProps> = ({
+  theme,
+  toggleTheme,
+  activeTab,
+  setActiveTab,
+}) => {
+  const logoSrc =
+    theme === "light" ? "/logo_light.svg" : "/logo_dark.svg";
+
   return (
-    <nav className="navbar" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-      <div className="navbar-logo" style={{ fontWeight: '800', fontSize: '20px' }}>Quamon</div>
+    <nav
+      className="navbar"
+      style={{
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+      }}
+    >
+      {/* LOGO */}
+      <div
+        className="navbar-logo"
+        style={{ display: 'flex', alignItems: 'center' }}
+      >
+        <img
+          src={logoSrc}
+          alt="Quamon Logo"
+          style={{ 
+            height: 36,
+            marginRight: 10,
+            display: 'block',
+          }}
+        />
+        <span
+        className="navbar-logo-text"
+          style={{
+            fontWeight: 800,
+            fontSize: '20px',
+            color: 'var(--text-color)',
+            lineHeight: 1,
+          }}
+        >
+          Quamon
+        </span>
+      </div>
       
+
+      {/* TABS */}
       <div className="tab-navigation" style={{ marginBottom: 0 }}>
-        <button 
+        <button
           className={`tab-button ${activeTab === 'grades' ? 'active' : ''}`}
           onClick={() => setActiveTab('grades')}
         >
           Bảng điểm
         </button>
-        <button 
+        <button
           className={`tab-button ${activeTab === 'instructions' ? 'active' : ''}`}
           onClick={() => setActiveTab('instructions')}
         >
@@ -29,6 +71,7 @@ const Navbar: React.FC<NavbarProps> = ({ theme, toggleTheme, activeTab, setActiv
         </button>
       </div>
 
+      {/* THEME TOGGLE */}
       <ThemeToggle theme={theme} toggleTheme={toggleTheme} />
     </nav>
   );
