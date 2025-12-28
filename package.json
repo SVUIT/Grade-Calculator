@@ -9,13 +9,15 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@types/xlsx": "^0.0.35",
     "appwrite": "^21.5.0",
     "next": "^16.1.1",
     "node-appwrite": "^21.1.0",
     "pdf-parse": "^1.1.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "uuid": "^13.0.0"
+    "uuid": "^13.0.0",
+    "xlsx": "^0.18.5"
   },
   "devDependencies": {
     "@types/node": "^20.10.5",
