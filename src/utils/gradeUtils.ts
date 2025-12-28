@@ -1,13 +1,7 @@
-import type { Subject, Course } from "../types/index";
+import type { Subject, Course } from "../types";
 
 // ================== AUTO CALCULATE - ĐIỂM HP =================
 export const calcSubjectScore = (subj: Partial<Subject>): string => {
-  // If diemHP is already set (from PDF), use it directly
-  if (subj.diemHP && subj.diemHP.trim() !== '') {
-    return subj.diemHP;
-  }
-  
-  // Otherwise, use the default calculation (though this might not match the PDF's calculation)
   const scores = [
     Number(subj.progressScore) || 0,
     Number(subj.midtermScore) || 0,
@@ -26,18 +20,11 @@ export const calcSubjectScore = (subj: Partial<Subject>): string => {
 
   if (totalWeight !== 100) return "Sai %";
 
-  let total = 0;
-  let hasAllScores = true;
-  
-  for (let i = 0; i < 4; i++) {
-    if (scores[i] === null) {
-      hasAllScores = false;
-      break;
-    }
-    total += scores[i]! * (weights[i] / 100);
-  }
-  
-  if (!hasAllScores) return "";
+  const total =
+    scores[0] * (weights[0] / 100) +
+    scores[1] * (weights[1] / 100) +
+    scores[2] * (weights[2] / 100) +
+    scores[3] * (weights[3] / 100);
 
   return total.toFixed(2);
 };
@@ -64,17 +51,17 @@ export const calcSemesterAverage = (subjects: Subject[]) => {
 export const normalizeScore = (value: string): string => {
   const trimmed = value.trim();
 
-  // Return empty string for empty input
+  // Nếu rỗng → trả rỗng (không mặc định 0)
   if (trimmed === "") return "";
 
   let num = Number(trimmed);
 
-  if (isNaN(num)) return ""; // Return empty for non-numeric input
-  if (num < 0) return "0"; // Minimum score is 0
-  if (num > 100) return "100"; // Maximum score is 100
+  if (isNaN(num)) return ""; // không phải số thì trả rỗng
+  if (num < 0) num = 0; // không cho âm
+  if (num > 10) num = 10; // không cho > 10
 
-  // Round to 2 decimal places if not an integer
-  return num % 1 === 0 ? num.toString() : parseFloat(num.toFixed(2)).toString();
+  // làm tròn tối đa 2 chữ số thập phân
+  return parseFloat(num.toFixed(2)).toString();
 };
 
 export const calcRequiredScores = (subj: Subject, expected: number): Partial<Subject> => {

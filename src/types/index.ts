@@ -1,21 +1,9 @@
-// src/types/index.ts
-
-// Course related types
-export interface CourseScores {
-  progressScore?: number;
-  midtermScore?: number;
-  practiceScore?: number;
-  finaltermScore?: number;
-  totalScore?: number;
-}
-
 export interface Course {
   courseCode: string;
   courseNameEn: string;
   courseNameVi: string;
   courseType: string;
   credits: number;
-  scores?: CourseScores;
   defaultWeights: {
     progressWeight: number;
     practiceWeight: number;
@@ -24,76 +12,61 @@ export interface Course {
   };
 }
 
+/* ================== PDF PROCESSING TYPES ================== */
+export interface PdfCourse {
+  courseCode: string;
+  courseNameVi: string;
+  credits: number;
+  scores?: {
+    progressScore?: number;
+    practiceScore?: number;
+    midtermScore?: number;
+    finaltermScore?: number;
+    totalScore?: number;
+  };
+}
+
+export interface PdfSemester {
+  semesterName: string;
+  courses: PdfCourse[];
+}
+
+export interface ProcessedPdfData {
+  semesters: PdfSemester[];
+}
+/* ========================================================== */
+
 export interface Subject {
   id?: string;
   courseCode: string;
   courseName: string;
-  credits: string; // kept as string for UI compatibility
+  credits: string;
+
+  // Scores
   progressScore: string;
   practiceScore: string;
   midtermScore: string;
-  finalScore: string; // Maps to finaltermScore
+  finalScore: string;
+
+  // Min Scores
   minProgressScore: string;
   minPracticeScore: string;
   minMidtermScore: string;
   minFinalScore: string;
+
+  // Weights
   progressWeight: string;
   practiceWeight: string;
   midtermWeight: string;
-  finalWeight: string; // Maps to finalTermWeight
-  score: string; // diemHP
+  finalWeight: string;
+
+  score: string;
   expectedScore: string;
   [key: string]: any;
-}
-
-export interface SemesterSummary {
-  averageScore: number;
-  creditsEarned: number;
-}
-
-export interface CumulativeSummary {
-  totalCreditsAccumulated: number;
-  gpa: number;
-  cumulativeGpa?: number; // For backward compatibility
 }
 
 export interface Semester {
   id?: string;
   name: string;
-  semesterName: string;
-  year: string;
   subjects: Subject[];
-  semesterSummary?: SemesterSummary;
-  cumulativeSummary?: CumulativeSummary;
-}
-
-// PDF processing types
-export interface SemesterData {
-  semesterName: string;
-  courses: Course[];
-}
-
-export interface ProcessedPdfData {
-  semesters: SemesterData[];
-  courseCode?: string;
-  courseNameVi?: string;
-  credits?: number;
-  scores?: CourseScores;
-}
-
-// Academic record types
-export interface AcademicRecord {
-  totalCredits: number;
-  gpa: number;
-  hasFGrade: boolean;
-  completedThesis: boolean;
-  thesisScore?: number;
-  englishProficiency: {
-    type: "IELTS" | "TOEFL" | "TOEIC" | "VSTEP" | "UIT";
-    score: number;
-  };
-  completedMilitaryTraining: boolean;
-  completedPhysicalEducation: boolean;
-  completedSoftSkills: boolean;
-  isUnderDisciplinaryAction: boolean;
 }
