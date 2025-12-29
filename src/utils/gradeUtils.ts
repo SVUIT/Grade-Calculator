@@ -9,6 +9,7 @@ export const calcSubjectScore = (subj: Partial<Subject>): string => {
     Number(subj.finalScore) || 0,
   ];
 
+  // Get weights and convert to numbers, handling both percentage (e.g., 20) and decimal (e.g., 0.2) formats
   const weights = [
     Number(subj.progressWeight) || 0,
     Number(subj.midtermWeight) || 0,
@@ -16,15 +17,36 @@ export const calcSubjectScore = (subj: Partial<Subject>): string => {
     Number(subj.finalWeight) || 0,
   ];
 
+  // Check if weights are in percentage format (sum ~100) or decimal format (sum ~1)
   const totalWeight = weights.reduce((a, b) => a + b, 0);
+  const isPercentageFormat = totalWeight > 1; // If sum is greater than 1, assume it's in percentage format
+  
+  // Convert weights to decimal if they're in percentage format
+  const decimalWeights = isPercentageFormat 
+    ? weights.map(w => w / 100)
+    : weights;
 
-  if (totalWeight !== 100) return "Sai %";
+  const hasScores = scores.some(score => score > 0);
 
+  // Only check weight sum if there are actual scores to calculate
+  if (hasScores) {
+    const expectedTotal = isPercentageFormat ? 100 : 1;
+    if (Math.abs(totalWeight - expectedTotal) > 0.01) {
+      return "Sai %";
+    }
+  }
+
+  // If no scores are entered, return empty string instead of 0
+  if (!hasScores) {
+    return "";
+  }
+
+  // Use the decimal weights for calculation
   const total =
-    scores[0] * (weights[0] / 100) +
-    scores[1] * (weights[1] / 100) +
-    scores[2] * (weights[2] / 100) +
-    scores[3] * (weights[3] / 100);
+    scores[0] * decimalWeights[0] +
+    scores[1] * decimalWeights[1] +
+    scores[2] * decimalWeights[2] +
+    scores[3] * decimalWeights[3];
 
   return total.toFixed(2);
 };
