@@ -181,7 +181,7 @@ const EditModal: React.FC<EditModalProps> = ({
       <div
         style={{
           position: "fixed",
-          top: "50%",
+          top: "calc(50% + 30px)",
           left: "50%",
           transform: "translate(-50%,-50%)",
           background: "var(--modal-bg)",
@@ -387,7 +387,7 @@ const EditModal: React.FC<EditModalProps> = ({
                     border: "1px solid var(--border-color)",
                     borderRadius: "6px",
                     padding: "6px 10px",
-                    fontSize: "16px",
+                    fontSize: "18px",
                     fontWeight: "bold",
                     width: "90px",
                     textAlign: "right",

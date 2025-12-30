@@ -111,25 +111,27 @@ const SubjectRow: React.FC<SubjectRowProps> = ({
     }
   };
 
-  const fields = [
-    { key: "courseCode", placeholder: "Nhập mã\nHP" },
-    { key: "courseName", placeholder: "Nhập tên HP" },
-    { key: "credits", placeholder: "Nhập tín chỉ" }
+    const mainFields = [
+    { key: "courseCode", placeholder: "Mã HP", align: "left" },
+    { key: "courseName", placeholder: "Tên HP", align: "left" },
+    { key: "credits", placeholder: "TC", align: "center" }
   ];
 
   return (
     <tr>
       <td className="semester-bg" style={{ textAlign: "center" }}>{i + 1}</td>
 
-      {fields.map((field) => (
+      {mainFields.map((field) => (
         <td
           key={field.key}
           style={{
             position: "relative",
-            textAlign: field.key === "courseCode" ? "center" : "left",
-            alignItems: "center",
+            textAlign: field.align as any,
+            padding: field.key === "credits" ? "0" : "8px 6px"
+
           }}
         >
+          
           {(field.key === "courseCode" || field.key === "courseName") && (
             <>
               <div
@@ -140,7 +142,9 @@ const SubjectRow: React.FC<SubjectRowProps> = ({
                 role="textbox"
                 tabIndex={0}
                 style={
-                  field.key === "courseCode" ? { whiteSpace: "pre-wrap", lineHeight: "1.2" } : {}
+                  field.key === "courseCode" ? { whiteSpace: "pre-wrap", lineHeight: "1.2", textAlign: "center", display: "flex", alignItems: "center", justifyContent: "center", } : {
+                  }
+                  
                 }
                 onClick={(e) => {
                   e.stopPropagation();
@@ -206,6 +210,13 @@ const SubjectRow: React.FC<SubjectRowProps> = ({
               data-placeholder="Nhập tín chỉ"
               role="textbox"
               tabIndex={0}
+              style={{
+                textAlign: "center",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                minHeight: "32px",
+              }}
               onKeyDown={(e) => {
                 if (e.key === "Enter") {
                   e.preventDefault();
@@ -213,12 +224,13 @@ const SubjectRow: React.FC<SubjectRowProps> = ({
                 }
               }}
               onBlur={(e) => {
-                updateSubjectField(si, i, field.key, e.target.innerText);
+                updateSubjectField(si, i, field.key, e.currentTarget.innerText.trim());
               }}
             >
               {(sub as any)[field.key]}
             </div>
           )}
+
         </td>
       ))}
       

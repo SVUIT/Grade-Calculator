@@ -14,7 +14,7 @@ const THEME_KEY = "grade_app_theme";
 const CUMULATIVE_KEY = "grade_app_cumulative";
 
 const generateId = (prefix = "sem") =>
-  `${prefix}-${crypto.randomUUID()}`;
+  `${prefix}-${crypto.randomUUID()}`; 
 
 const createEmptySubject = (): Subject => ({
   id: generateId("sub"),

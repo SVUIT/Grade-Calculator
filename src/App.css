@@ -228,7 +228,7 @@ body {
 }
 
 .light-mode .navbar {
-    background: rgba(255, 255, 255, 0.8);
+    background: rgb(255, 255, 255);
 }
 
 .footer {
@@ -327,6 +327,7 @@ body {
   color: var(--text-color);
 }
 
+
 .grade-table td:last-child { border-right: none; }
 .grade-table tr:last-child td { border-bottom: none; }
 
@@ -379,16 +380,22 @@ body {
   outline: none;
   background: transparent;
   color: var(--text-color);
-  white-space: normal; /* Fixed: allows wrapping instead of truncation */
+  white-space: normal; 
   overflow-wrap: break-word; 
   cursor: pointer;
-  min-height: 20px;
-  line-height: 1.4;
+  min-height: 24px;
+  line-height: 1.2;
+  display: flex;
+  align-items: center;
 }
+
 
 .editable-cell-multiline {
   white-space: normal;
   overflow-wrap: break-word;
+  display: flex;
+  align-items: center; 
+  min-height: 24px;
 }
 
 
@@ -397,7 +404,7 @@ body {
   white-space: pre-wrap;
   overflow: visible;
   line-height: 1.2;
-  font-size: 13px;
+  font-size: 14px;
   text-align: center;
   display: flex;
   align-items: center;
@@ -607,9 +614,6 @@ body {
   .app-container { padding: 40px 8% 40px 8%; }
   .navbar { padding: 12px 8%; }
 
-  .editable-cell-multiline {
-    padding: 0 26px;
-  }
 }
 
 @media (max-width: 1024px) {
@@ -622,9 +626,7 @@ body {
     /* text-align center inherited from main .footer */
   }
 
-  .editable-cell-multiline {
-    padding: 0 18px;
-  }
+
   
   /* Remove table wrapper padding to reduce gap further */
   .table-wrapper { padding-bottom: 0; }
@@ -647,10 +649,6 @@ body {
 
   .navbar-logo-text {
     font-size: 18px;
-  }
-
-  .editable-cell-multiline {
-    padding: 0 16px;
   }
 
   /* Tablet Portrait: Smaller padding */
