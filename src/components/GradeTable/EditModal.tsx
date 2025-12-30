@@ -232,7 +232,8 @@ const EditModal: React.FC<EditModalProps> = ({
                 const score = (currentSub as any)[f.key];
                 const minScore = (currentSub as any)[f.minKey];
                 const isOver10 = minScore && Number(minScore) > 10;
-                const weightVal = (currentSub as any)[f.weightKey];
+                const weightVal = Number((currentSub as any)[f.weightKey]) || 0;
+                const isZeroWeight = weightVal === 0;
 
                 return (
                   <tr key={f.key}>
@@ -240,7 +241,11 @@ const EditModal: React.FC<EditModalProps> = ({
                       {f.label}
                     </td>
 
-                    <td style={{ border: "1px solid var(--border-color)", padding: 0 }}>
+                    <td style={{ 
+                      border: "1px solid var(--border-color)", 
+                      padding: 0,
+                      background: isZeroWeight ? "rgba(128, 128, 128, 0.1)" : "transparent"
+                    }}>
                       <input
                         value={score}
                         inputMode="decimal"
@@ -258,7 +263,7 @@ const EditModal: React.FC<EditModalProps> = ({
                         }}
                         style={{
                           background: "transparent",
-                          color: "var(--text-color)",
+                          color: isZeroWeight ? "var(--text-muted)" : "var(--text-color)",
                           textAlign: "center",
                           width: "100%",
                           padding: "10px 4px",
@@ -271,9 +276,14 @@ const EditModal: React.FC<EditModalProps> = ({
                       />
                     </td>
 
-                    <td style={{ border: "1px solid var(--border-color)", padding: 0, color: isOver10 ? "red" : "inherit" }}>
+                    <td style={{ 
+                      border: "1px solid var(--border-color)", 
+                      padding: 0, 
+                      color: isOver10 ? "red" : "inherit" ,
+                      background: isZeroWeight ? "rgba(128, 128, 128, 0.1)" : "transparent"
+                    }}>
                       <div style={{ padding: "10px 4px", fontWeight: isOver10 ? "bold" : "normal" }}>
-                        {minScore || ""}
+                        {isZeroWeight ? "" : (minScore || "")}
                       </div>
                     </td>
 
@@ -288,7 +298,7 @@ const EditModal: React.FC<EditModalProps> = ({
                       onClick={() => {
                           if (activeWeightField !== f.weightKey) {
                               setActiveWeightField(f.weightKey);
-                              setTempWeightValue(weightVal);
+                              setTempWeightValue(weightVal.toString());
                           }
                       }}
                     >
@@ -321,7 +331,11 @@ const EditModal: React.FC<EditModalProps> = ({
                               }}
                           />
                       ) : (
-                          <div style={{ padding: "10px 4px", color: weightError ? "red" : "inherit", fontWeight: "bold" }}>
+                          <div style={{ 
+                            padding: "10px 4px", 
+                            color: weightError ? "red" : (isZeroWeight ? "var(--text-muted)" : "inherit"), 
+                            fontWeight: "bold" 
+                            }}>
                               {weightVal}%
                           </div>
                       )}

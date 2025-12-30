@@ -100,11 +100,12 @@ export const calcRequiredScores = (subj: Subject, expected: number): Partial<Sub
   fields.forEach((f, idx) => {
     const raw = subj[f] as string;
     const score = Number(raw);
-    const w = Number(subj[weightFields[idx]]) / 100;
+    const weightVal = Number(subj[weightFields[idx]]) || 0;
+    const w = weightVal / 100;
 
     if (raw.trim() !== "" && !isNaN(score)) {
-      currentSum += score * w; // có điểm
-    } else {
+      currentSum += score * w; // đã có điểm
+    } else if (weightVal > 0) {
       missingWeight += w; // chưa nhập
       missingFields.push(f as string);
       missingMinFields.push(minFields[idx] as string);
@@ -112,7 +113,7 @@ export const calcRequiredScores = (subj: Subject, expected: number): Partial<Sub
     }
   });
 
-  if (missingWeight === 0) return {}; // không có mục trống → không tính được
+  if (missingWeight <= 0) return {}; // không có mục trống → không tính được
 
   const need = (expected - currentSum) / missingWeight;
 

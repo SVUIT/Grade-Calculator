@@ -244,18 +244,17 @@ const SubjectRow: React.FC<SubjectRowProps> = ({
         const minScore = (sub as any)[f.minKey];
         const hasMinScore = minScore && minScore.toString().trim() !== "";
         const isOver10 = hasMinScore && Number(minScore) > 10;
-        const weight = (sub as any)[f.weightKey];
+        const weight = Number((sub as any)[f.weightKey]) || 0;
+        const isZeroWeight = weight === 0;
 
         return (
           <td
             key={f.key}
             className="score-cell"
             style={{
-              background: hasMinScore
-                ? isOver10
-                  ? "transparent"
-                  : "var(--primary-purple)"
-                : "transparent",
+              background: isZeroWeight 
+                ? "rgba(128, 128, 128, 0.15)" // Màu xám cho cột trọng số 0
+                : (hasMinScore ? (isOver10 ? "rgba(255, 0, 0, 0)" : "var(--primary-purple)") : "transparent") 
             }}
           >
             <div
@@ -279,6 +278,13 @@ const SubjectRow: React.FC<SubjectRowProps> = ({
                 }
               }}
               onBlur={(e) => handleScoreBlur(f.key, e.target.innerText, e.target as HTMLElement)}
+              style={{
+                color: hasMinScore ? (isOver10 ? "red" : "var(--primary-purple)") : (isZeroWeight ? "var(--text-muted)" : "inherit"),
+                fontWeight: (hasMinScore || isZeroWeight) ? "bold" : "normal",
+                fontStyle: hasMinScore ? "italic" : "normal",
+                minHeight: "32px",
+                opacity: isZeroWeight ? 0.8 : 1
+              }}
             >
               {hasMinScore ? minScore : score}
             </div>
@@ -286,8 +292,17 @@ const SubjectRow: React.FC<SubjectRowProps> = ({
         );
       })}
 
-      <td style={{ textAlign: "center" }}>
-        <b style={{ color: "var(--text-color)" }}>{calcSubjectScore(sub)}</b>
+      <td style={{ textAlign: "center", background: "rgba(128, 128, 128, 0.15)", padding: 0 }}>
+        <div style={{ 
+          height: "32px", 
+          display: "flex", 
+          alignItems: "center", 
+          justifyContent: "center",
+          color: "var(--text-muted)",
+          fontWeight: "bold"
+        }}>
+          {calcSubjectScore(sub)}
+        </div>      
       </td>
 
       <td style={{ position: "relative" }}>
