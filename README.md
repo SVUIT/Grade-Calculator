@@ -35,7 +35,8 @@ Developer notes
 - Grade and score calculations: `src/utils/gradeUtils.ts`
 - Course catalog: `src/assets/courses_weighted.json`
 
-If you add or change fields related to scores or weights, add tests or manually verify behavior in the UI to avoid regressions.
+**Documentation:** See the [`docs/`](./docs) folder for detailed technical documentation.
 
+If you add or change fields related to scores or weights, add tests or manually verify behavior in the UI to avoid regressions.
 
 
