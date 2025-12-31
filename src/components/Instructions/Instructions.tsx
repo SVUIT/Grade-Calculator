@@ -192,10 +192,6 @@ const Instructions: React.FC = () => {
             <li>Điểm tổng kết môn học</li>
             <li>Điểm kỳ vọng (nếu có)</li>
           </ul>
-
-          <p className="note">
-            <strong>Lưu ý:</strong> File Excel có thể được mở bằng Microsoft Excel, Google Sheets hoặc các phần mềm tương thích khác.
-          </p>
         </div>
       </section>
     </div>
