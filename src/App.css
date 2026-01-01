@@ -3,6 +3,11 @@ body {
   height: 100%;
 }
 
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
 #root {
   width: 100%;
   margin: 0;
@@ -864,11 +869,11 @@ body.light-mode {
   }
 
   /* Summary Labels - Prevent wrapping/Small size */
-  .summary-label { 
-    font-size: 7px; /* Reduced from 8px */
-    padding-left: 2px !important; 
-    line-height: 1.1;
-    white-space: normal; /* Allow wrap but tight */
+  .summary-label {
+  display: inline-flex;    
+  align-items: center;
+  line-height: normal;        
+  font-size: 7px !important;  
   }
   
 
