@@ -687,5 +687,44 @@
       "midtermWeight": 0,
       "finalTermWeight": 0.7
     }
+  },
+  {
+    "courseCode": "NT505",
+    "courseNameEn": "Graduation Thesis",
+    "courseNameVi": "Khóa luận tốt nghiệp",
+    "courseType": "TN",
+    "credits": 10,
+    "defaultWeights": {
+      "progressWeight": 0,
+      "practiceWeight": 0,
+      "midtermWeight": 0,
+      "finalTermWeight": 1.0
+    }
+  },
+  {
+    "courseCode": "NT215",
+    "courseNameEn": "Enterprise Internship",
+    "courseNameVi": "Thực tập doanh nghiệp",
+    "courseType": "TN",
+    "credits": 2,
+    "defaultWeights": {
+      "progressWeight": 0,
+      "practiceWeight": 0,
+      "midtermWeight": 0,
+      "finalTermWeight": 1.0
+    }
+  },
+  {
+    "courseCode": "NT114",
+    "courseNameEn": "Specialized Project",
+    "courseNameVi": "Đồ án chuyên ngành",
+    "courseType": "CN",
+    "credits": 2,
+    "defaultWeights": {
+      "progressWeight": 0,
+      "practiceWeight": 0,
+      "midtermWeight": 0,
+      "finalTermWeight": 1.0
+    }
   }
 ]
