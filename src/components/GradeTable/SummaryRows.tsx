@@ -24,7 +24,9 @@ const SummaryRows: React.FC<SummaryRowsProps> = ({
       {/* 1) Tổng số tín chỉ toàn khóa */}
       <tr style={{ background: "transparent", fontWeight: "bold" }}>
         <td className="semester-bg"></td>
-        <td colSpan={2} className="summary-label">Số tín chỉ đã học</td>
+        <td colSpan={2} className="summary-label">
+          <span className="label-content">Số tín chỉ đã học</span>
+        </td>
         <td style={{ textAlign: "center" }}>
           {semesters.reduce(
             (sum, sem) =>
@@ -50,7 +52,9 @@ const SummaryRows: React.FC<SummaryRowsProps> = ({
       {/* 2) Điểm trung bình chung toàn khóa */}
       <tr style={{ background: "transparent", fontWeight: "bold" }}>
         <td className="semester-bg"></td>
-        <td colSpan={2} className="summary-label">Điểm trung bình chung</td>
+        <td colSpan={2} className="summary-label">
+          <span className="label-content">Điểm trung bình chung</span>
+        </td>
 
         {/* Empty cells for TinChi, QT, GK, TH, CK */}
         <td></td>

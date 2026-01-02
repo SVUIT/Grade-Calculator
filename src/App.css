@@ -903,6 +903,11 @@ body.light-mode {
   font-size: 7px !important;  
 }
   
+.label-content {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
 
   /* Ultra-compact columns for Mobile */
   .col-stt { width: 40px !important; }
