@@ -15,6 +15,7 @@ interface SubjectRowProps {
   semesters: Semester[];
   setSemesters: (semesters: Semester[]) => void;
   updateSubjectField: (s: number, i: number, f: string, v: string) => void;
+  updateSubjectExpectedScore: (s: number, i: number, v: string) => void;
   deleteSubject: (s: number, i: number) => void;
   openAdvancedModal: (s: number, i: number) => void;
 
@@ -42,6 +43,7 @@ const SubjectRow: React.FC<SubjectRowProps> = ({
   semesters,
   setSemesters,
   updateSubjectField,
+  updateSubjectExpectedScore,
   deleteSubject,
   openAdvancedModal,
   openMenu,
@@ -91,26 +93,10 @@ const SubjectRow: React.FC<SubjectRowProps> = ({
   const handleExpectedScoreBlur = (e: React.FocusEvent<HTMLDivElement>) => {
     if (hasAllScores(sub)) return;
     const val = e.currentTarget.innerText.trim();
-    const updated = [...semesters];
     
-    if (val === "") {
-      // Người dùng xóa điểm kỳ vọng
-      updated[si].subjects[i].expectedScore = "";
-      updated[si].subjects[i].isExpectedManual = false;
-    } else {
-      // Người dùng nhập điểm kỳ vọng
-      updated[si].subjects[i].expectedScore = val;
-      updated[si].subjects[i].isExpectedManual = true;
-
-      const xp = Number(val);
-      if (!isNaN(xp) && val !== "") {
-        const required = calcRequiredScores(updated[si].subjects[i], xp);
-        Object.entries(required).forEach(([field, value]) => {
-          (updated[si].subjects[i] as any)[field] = value;
-        });
-      }
-    }
-    setSemesters(updated);
+    // Sử dụng hàm updateSubjectExpectedScore từ useGradeApp
+    // Hàm này sẽ tự động xử lý việc cập nhật và rebalance
+    updateSubjectExpectedScore(si, i, val);
   };
 
   const handleKeyDown = (e: React.KeyboardEvent, action: () => void) => {
@@ -120,7 +106,7 @@ const SubjectRow: React.FC<SubjectRowProps> = ({
     }
   };
 
-    const mainFields = [
+  const mainFields = [
     { key: "courseCode", placeholder: "Mã HP", align: "left" },
     { key: "courseName", placeholder: "Tên HP", align: "left" },
     { key: "credits", placeholder: "TC", align: "center" }
@@ -137,7 +123,6 @@ const SubjectRow: React.FC<SubjectRowProps> = ({
             position: "relative",
             textAlign: field.align as any,
             padding: field.key === "credits" ? "0" : "8px 6px"
-
           }}
         >
           
@@ -151,9 +136,7 @@ const SubjectRow: React.FC<SubjectRowProps> = ({
                 role="textbox"
                 tabIndex={0}
                 style={
-                  field.key === "courseCode" ? { whiteSpace: "pre-wrap", lineHeight: "1.2", textAlign: "center", display: "flex", alignItems: "center", justifyContent: "center", } : {
-                  }
-                  
+                  field.key === "courseCode" ? { whiteSpace: "pre-wrap", lineHeight: "1.2", textAlign: "center", display: "flex", alignItems: "center", justifyContent: "center", } : {}
                 }
                 onClick={(e) => {
                   e.stopPropagation();
@@ -188,12 +171,10 @@ const SubjectRow: React.FC<SubjectRowProps> = ({
                       targetSub.courseCode = course.courseCode;
                       targetSub.courseName = course.courseNameVi;
                       
-                      // Update credits if available
                       if (course.credits) {
                           targetSub.credits = course.credits.toString();
                       }
 
-                      // Update weights if available
                       if (course.defaultWeights) {
                           targetSub.progressWeight = (course.defaultWeights.progressWeight * 100).toString();
                           targetSub.midtermWeight = (course.defaultWeights.midtermWeight * 100).toString();
@@ -262,7 +243,7 @@ const SubjectRow: React.FC<SubjectRowProps> = ({
             className="score-cell"
             style={{
               background: isZeroWeight 
-                ? "rgba(128, 128, 128, 0.15)" // Màu xám cho cột trọng số 0
+                ? "rgba(128, 128, 128, 0.15)"
                 : (hasMinScore ? (isOver10 ? "rgba(255, 0, 0, 0)" : "var(--primary-purple)") : "transparent") 
             }}
           >
@@ -342,7 +323,6 @@ const SubjectRow: React.FC<SubjectRowProps> = ({
           {sub.expectedScore}
         </div>
 
-        {/* Action Dots */}
         <div
           className="row-action-dots"
           role="button"
@@ -363,7 +343,6 @@ const SubjectRow: React.FC<SubjectRowProps> = ({
           ⋮
         </div>
 
-        {/* Dropdown Menu */}
         <div
           onClick={(e) => e.stopPropagation()}
           className="dropdown-menu"
@@ -373,11 +352,11 @@ const SubjectRow: React.FC<SubjectRowProps> = ({
               openMenu?.s === si && openMenu?.i === i ? "flex" : "none",
             flexDirection: "column",
             position: "absolute",
-            right: "0",    // Aligned with the right edge of the cell (Left of dots)
-            top: "75%",    // Below the content
+            right: "0",
+            top: "75%",
             marginTop: "0",
             borderRadius: 8,
-            minWidth: 140, // Standard width
+            minWidth: 140,
             width: "max-content",
             maxHeight: "none",
             overflowY: "visible",

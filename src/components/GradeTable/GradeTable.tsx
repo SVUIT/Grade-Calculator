@@ -12,6 +12,7 @@ interface GradeTableProps {
   isCumulativeManual: boolean;
   setIsCumulativeManual: (value: boolean) => void;
   updateSubjectField: (s: number, i: number, f: string, v: string) => void;
+  updateSubjectExpectedScore: (s: number, i: number, v: string) => void; // ← THÊM DÒNG NÀY
   deleteSemester: (id: string) => void;
   deleteSubject: (s: number, i: number) => void;
   openAdvancedModal: (s: number, i: number) => void;
@@ -49,6 +50,7 @@ const GradeTable: React.FC<GradeTableProps> = ({
   isCumulativeManual,
   setIsCumulativeManual,
   updateSubjectField,
+  updateSubjectExpectedScore, // ← THÊM DÒNG NÀY
   deleteSemester,
   deleteSubject,
   openAdvancedModal,
@@ -116,6 +118,7 @@ const GradeTable: React.FC<GradeTableProps> = ({
             semesters={semesters}
             setSemesters={setSemesters}
             updateSubjectField={updateSubjectField}
+            updateSubjectExpectedScore={updateSubjectExpectedScore} // ← THÊM DÒNG NÀY
             deleteSemester={deleteSemester}
             deleteSubject={deleteSubject}
             openAdvancedModal={openAdvancedModal}

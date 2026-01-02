@@ -38,6 +38,7 @@ export default function Home() {
     deleteSubject,
     openAdvancedModal,
     updateSubjectField,
+    updateSubjectExpectedScore, // ← THÊM DÒNG NÀY
     openMenu,
     setOpenMenu,
     semesterMenuOpen,
@@ -312,6 +313,7 @@ export default function Home() {
                 isCumulativeManual={isCumulativeManual}
                 setIsCumulativeManual={setIsCumulativeManual}
                 updateSubjectField={updateSubjectField}
+                updateSubjectExpectedScore={updateSubjectExpectedScore} // ← THÊM DÒNG NÀY
                 deleteSemester={deleteSemester}
                 deleteSubject={deleteSubject}
                 openAdvancedModal={openAdvancedModal}

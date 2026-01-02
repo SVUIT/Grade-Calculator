@@ -276,11 +276,57 @@ export const useGradeApp = () => {
       const sub = updated[sIdx].subjects[subIdx];
       
       if (value === "") {
+        // Người dùng xóa điểm kỳ vọng
         sub.expectedScore = "";
         sub.isExpectedManual = false;
       } else {
-        sub.expectedScore = value;
-        sub.isExpectedManual = true;
+        // Người dùng nhập điểm kỳ vọng
+        const expectedVal = Number(value);
+        if (!isNaN(expectedVal) && expectedVal >= 0 && expectedVal <= 10) {
+          sub.expectedScore = value;
+          sub.isExpectedManual = true;
+          
+          // Tính toán điểm yêu cầu cho môn này
+          const required = calcRequiredScores(sub, expectedVal);
+          Object.entries(required).forEach(([field, val]) => {
+            (sub as any)[field] = val;
+          });
+        }
+      }
+      
+      // Tính toán lại điểm trung bình kỳ vọng học kỳ
+      // Dựa trên các môn đã có điểm kỳ vọng
+      let totalCredits = 0;
+      let lockedCredits = 0;
+      let lockedPoints = 0;
+      
+      updated[sIdx].subjects.forEach((s: any) => {
+        const credits = Number(s.credits) || 0;
+        totalCredits += credits;
+        
+        const hasAll = ["progressScore", "midtermScore", "practiceScore", "finalScore"].every((f) => {
+          const v = (s as any)[f];
+          return v !== undefined && v.toString().trim() !== "";
+        });
+        
+        if (hasAll) {
+          lockedCredits += credits;
+          lockedPoints += Number(calcSubjectScore(s)) * credits;
+        } else if (s.isExpectedManual && s.expectedScore) {
+          lockedCredits += credits;
+          lockedPoints += Number(s.expectedScore) * credits;
+        }
+      });
+      
+      // Cập nhật điểm trung bình kỳ vọng học kỳ nếu chưa được người dùng nhập
+      if (!updated[sIdx].isExpectedAverageManual && totalCredits > 0) {
+        if (lockedCredits === totalCredits) {
+          // Tất cả môn đều có điểm
+          updated[sIdx].expectedAverage = (lockedPoints / totalCredits).toFixed(2);
+        } else if (lockedCredits > 0) {
+          // Có một số môn đã có điểm, tính trung bình tạm
+          updated[sIdx].expectedAverage = (lockedPoints / totalCredits).toFixed(2);
+        }
       }
       
       return rebalanceGlobal(updated, sIdx);
