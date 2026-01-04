@@ -850,7 +850,7 @@
     "courseCode": "CS005",
     "courseNameEn": "Introduction to Computer Science",
     "courseNameVi": "Giới thiệu ngành Khoa học Máy tính",
-    "courseType": "ĐC",
+    "courseType": "CSNN",
     "credits": 1,
     "defaultWeights": { // Uncertainty here
       "progressWeight": 0.5,
