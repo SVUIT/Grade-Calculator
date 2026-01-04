@@ -804,6 +804,424 @@
       "midtermWeight": 0,
       "finalTermWeight": 0.4
     }
+  },
+  // Eng01, Eng02, Eng03 
+  {
+    "courseCode": "ENG01",
+    "courseNameEn": "English 1",
+    "courseNameVi": "Anh Văn 1",
+    "courseType": "ĐC",
+    "credits": 4,
+    "defaultWeights": {
+      "progressWeight": 0.3,
+      "practiceWeight": 0,
+      "midtermWeight": 0,
+      "finalTermWeight": 0.7
+    }
+  },
+  {
+    "courseCode": "ENG02",
+    "courseNameEn": "English 2",
+    "courseNameVi": "Anh Văn 2",
+    "courseType": "ĐC",
+    "credits": 4,
+    "defaultWeights": {
+      "progressWeight": 0.3,
+      "practiceWeight": 0,
+      "midtermWeight": 0,
+      "finalTermWeight": 0.7
+    }
+  },
+  {
+    "courseCode": "ENG03",
+    "courseNameEn": "English 3",
+    "courseNameVi": "Anh Văn 3",
+    "courseType": "ĐC",
+    "credits": 4,
+    "defaultWeights": {
+      "progressWeight": 0.3,
+      "practiceWeight": 0,
+      "midtermWeight": 0,
+      "finalTermWeight": 0.7
+    }
+  },
+  [
+  {
+    "courseCode": "CS005",
+    "courseNameEn": "Introduction to Computer Science",
+    "courseNameVi": "Giới thiệu ngành Khoa học Máy tính",
+    "courseType": "ĐC",
+    "credits": 1,
+    "defaultWeights": { // Uncertainty here
+      "progressWeight": 0.5,
+      "practiceWeight": 0,
+      "midtermWeight": 0,
+      "finalTermWeight": 0.5
+    }
+  },
+  {
+    "courseCode": "CS111",
+    "courseNameEn": "Programming Principles and Methods",
+    "courseNameVi": "Nguyên lý và phương pháp lập trình",
+    "courseType": "CSNN",
+    "credits": 4,
+    "defaultWeights": { // Uncertainty here
+      "progressWeight": 0.2,
+      "practiceWeight": 0.3,
+      "midtermWeight": 0,
+      "finalTermWeight": 0.5
+    }
+  },
+  {
+    "courseCode": "CS526",
+    "courseNameEn": "Mobile Multimedia Application Development",
+    "courseNameVi": "Phát triển ứng dụng đa phương tiện trên thiết bị di động",
+    "courseType": "CN",
+    "credits": 4,
+    "defaultWeights": { // Uncertainty here
+      "progressWeight": 0.2,
+      "practiceWeight": 0.3,
+      "midtermWeight": 0,
+      "finalTermWeight": 0.5
+    }
+  },
+  {
+    "courseCode": "CS523",
+    "courseNameEn": "Advanced Data Structures and Algorithms",
+    "courseNameVi": "Cấu trúc dữ liệu và giải thuật nâng cao",
+    "courseType": "CN",
+    "credits": 4,
+    "defaultWeights": { // Uncertainty here
+      "progressWeight": 0.2,
+      "practiceWeight": 0.2,
+      "midtermWeight": 0,
+      "finalTermWeight": 0.6
+    }
+  },
+  {
+    "courseCode": "CS106",
+    "courseNameEn": "Artificial Intelligence",
+    "courseNameVi": "Trí tuệ nhân tạo",
+    "courseType": "CN",
+    "credits": 4,
+    "defaultWeights": { // Uncertainty here
+      "progressWeight": 0.2,
+      "practiceWeight": 0.3,
+      "midtermWeight": 0,
+      "finalTermWeight": 0.5
+    }
+  },
+  {
+    "courseCode": "CS114",
+    "courseNameEn": "Machine Learning",
+    "courseNameVi": "Máy học",
+    "courseType": "CN",
+    "credits": 4,
+    "defaultWeights": { // Uncertainty here
+      "progressWeight": 0.2,
+      "practiceWeight": 0.3,
+      "midtermWeight": 0,
+      "finalTermWeight": 0.5
+    }
+  },
+  {
+    "courseCode": "CS211",
+    "courseNameEn": "Advanced Artificial Intelligence",
+    "courseNameVi": "Trí tuệ nhân tạo nâng cao",
+    "courseType": "CN",
+    "credits": 4,
+    "defaultWeights": { // Uncertainty here
+      "progressWeight": 0.2,
+      "practiceWeight": 0.3,
+      "midtermWeight": 0,
+      "finalTermWeight": 0.5
+    }
+  },
+  {
+    "courseCode": "CS312",
+    "courseNameEn": "Multi-Agent Systems",
+    "courseNameVi": "Hệ thống đa tác tử",
+    "courseType": "CN",
+    "credits": 4,
+    "defaultWeights": { // Uncertainty here
+      "progressWeight": 0.2,
+      "practiceWeight": 0.3,
+      "midtermWeight": 0,
+      "finalTermWeight": 0.5
+    }
+  },
+  {
+    "courseCode": "CS314",
+    "courseNameEn": "Symbolic Programming in Artificial Intelligence",
+    "courseNameVi": "Lập trình symbolic trong trí tuệ nhân tạo",
+    "courseType": "CN",
+    "credits": 4,
+    "defaultWeights": { // Uncertainty here
+      "progressWeight": 0.2,
+      "practiceWeight": 0.3,
+      "midtermWeight": 0,
+      "finalTermWeight": 0.5
+    }
+  },
+  {
+    "courseCode": "CS315",
+    "courseNameEn": "Advanced Machine Learning",
+    "courseNameVi": "Máy học nâng cao",
+    "courseType": "CN",
+    "credits": 4,
+    "defaultWeights": { // Uncertainty here
+      "progressWeight": 0.2,
+      "practiceWeight": 0.3,
+      "midtermWeight": 0,
+      "finalTermWeight": 0.5
+    }
+  },
+  {
+    "courseCode": "CS217",
+    "courseNameEn": "Knowledge-Based Systems",
+    "courseNameVi": "Các hệ cơ sở tri thức",
+    "courseType": "CN",
+    "credits": 4,
+    "defaultWeights": { // Uncertainty here
+      "progressWeight": 0.2,
+      "practiceWeight": 0.3,
+      "midtermWeight": 0,
+      "finalTermWeight": 0.5
+    }
+  },
+  {
+    "courseCode": "CS214",
+    "courseNameEn": "Knowledge Representation and Reasoning",
+    "courseNameVi": "Biểu diễn tri thức và suy luận",
+    "courseType": "CN",
+    "credits": 4,
+    "defaultWeights": { // Uncertainty here
+      "progressWeight": 0.2,
+      "practiceWeight": 0.3,
+      "midtermWeight": 0,
+      "finalTermWeight": 0.5
+    }
+  },
+  {
+    "courseCode": "CS316",
+    "courseNameEn": "Intelligent Problem Solving Systems",
+    "courseNameVi": "Các hệ giải bài toán thông minh",
+    "courseType": "CN",
+    "credits": 4,
+    "defaultWeights": { // Uncertainty here
+      "progressWeight": 0.2,
+      "practiceWeight": 0.3,
+      "midtermWeight": 0,
+      "finalTermWeight": 0.5
+    }
+  },
+  {
+    "courseCode": "CS229",
+    "courseNameEn": "Computational Semantics",
+    "courseNameVi": "Ngữ nghĩa học tính toán",
+    "courseType": "CN",
+    "credits": 4,
+    "defaultWeights": { // Uncertainty here
+      "progressWeight": 0.2,
+      "practiceWeight": 0.3,
+      "midtermWeight": 0,
+      "finalTermWeight": 0.5
+    }
+  },
+  {
+    "courseCode": "CS226",
+    "courseNameEn": "Computational Linguistics",
+    "courseNameVi": "Ngôn ngữ học máy tính",
+    "courseType": "CN",
+    "credits": 4,
+    "defaultWeights": { // Uncertainty here
+      "progressWeight": 0.3,
+      "practiceWeight": 0,
+      "midtermWeight": 0,
+      "finalTermWeight": 0.7
+    }
+  },
+  {
+    "courseCode": "CS222",
+    "courseNameEn": "Advanced Natural Language Processing",
+    "courseNameVi": "Xử lý ngôn ngữ tự nhiên nâng cao",
+    "courseType": "CN",
+    "credits": 4,
+    "defaultWeights": { // Uncertainty here
+      "progressWeight": 0.2,
+      "practiceWeight": 0.3,
+      "midtermWeight": 0,
+      "finalTermWeight": 0.5
+    }
+  },
+  {
+    "courseCode": "CS324",
+    "courseNameEn": "Machine Learning for Natural Language Processing",
+    "courseNameVi": "Máy học trong xử lý ngôn ngữ tự nhiên",
+    "courseType": "CN",
+    "credits": 4,
+    "defaultWeights": { // Uncertainty here
+      "progressWeight": 0.2,
+      "practiceWeight": 0.3,
+      "midtermWeight": 0,
+      "finalTermWeight": 0.5
+    }
+  },
+  {
+    "courseCode": "CS323",
+    "courseNameEn": "Question Answering Systems",
+    "courseNameVi": "Các hệ thống hỏi-đáp",
+    "courseType": "CN",
+    "credits": 4,
+    "defaultWeights": { // Uncertainty here
+      "progressWeight": 0.2,
+      "practiceWeight": 0.3,
+      "midtermWeight": 0,
+      "finalTermWeight": 0.5
+    }
+  },
+  {
+    "courseCode": "CS321",
+    "courseNameEn": "Corpus Linguistics",
+    "courseNameVi": "Ngôn ngữ học ngữ liệu",
+    "courseType": "CN",
+    "credits": 4,
+    "defaultWeights": { // Uncertainty here
+      "progressWeight": 0.3,
+      "practiceWeight": 0,
+      "midtermWeight": 0,
+      "finalTermWeight": 0.7
+    }
+  },
+  {
+    "courseCode": "CS325",
+    "courseNameEn": "Machine Translation",
+    "courseNameVi": "Dịch máy",
+    "courseType": "CN",
+    "credits": 4,
+    "defaultWeights": { // Uncertainty here
+      "progressWeight": 0.2,
+      "practiceWeight": 0.3,
+      "midtermWeight": 0,
+      "finalTermWeight": 0.5
+    }
+  },
+  {
+    "courseCode": "CS105",
+    "courseNameEn": "Computer Graphics",
+    "courseNameVi": "Đồ họa máy tính",
+    "courseType": "CN",
+    "credits": 4,
+    "defaultWeights": { // Uncertainty here
+      "progressWeight": 0.2,
+      "practiceWeight": 0.3,
+      "midtermWeight": 0,
+      "finalTermWeight": 0.5
+    }
+  },
+  {
+    "courseCode": "CS331",
+    "courseNameEn": "Advanced Computer Vision",
+    "courseNameVi": "Thị giác máy tính nâng cao",
+    "courseType": "CN",
+    "credits": 4,
+    "defaultWeights": { // Uncertainty here
+      "progressWeight": 0.2,
+      "practiceWeight": 0.3,
+      "midtermWeight": 0,
+      "finalTermWeight": 0.5
+    }
+  },
+  {
+    "courseCode": "CS338",
+    "courseNameEn": "Pattern Recognition",
+    "courseNameVi": "Nhận dạng",
+    "courseType": "CN",
+    "credits": 4,
+    "defaultWeights": { // Uncertainty here
+      "progressWeight": 0.2,
+      "practiceWeight": 0.3,
+      "midtermWeight": 0,
+      "finalTermWeight": 0.5
+    }
+  },
+  {
+    "courseCode": "CS532",
+    "courseNameEn": "Computer Vision in Human–Computer Interaction",
+    "courseNameVi": "Thị giác máy tính trong tương tác người – máy",
+    "courseType": "CN",
+    "credits": 4,
+    "defaultWeights": { // Uncertainty here
+      "progressWeight": 0.2,
+      "practiceWeight": 0.3,
+      "midtermWeight": 0,
+      "finalTermWeight": 0.5
+    }
+  },
+  {
+    "courseCode": "CS232",
+    "courseNameEn": "Multimedia Computing",
+    "courseNameVi": "Tính toán đa phương tiện",
+    "courseType": "CN",
+    "credits": 4,
+    "defaultWeights": { // Uncertainty here
+      "progressWeight": 0.2,
+      "practiceWeight": 0.3,
+      "midtermWeight": 0,
+      "finalTermWeight": 0.5
+    }
+  },
+  {
+    "courseCode": "CS336",
+    "courseNameEn": "Multimedia Information Retrieval",
+    "courseNameVi": "Truy vấn thông tin đa phương tiện",
+    "courseType": "CN",
+    "credits": 4,
+    "defaultWeights": { // Uncertainty here
+      "progressWeight": 0.2,
+      "practiceWeight": 0.3,
+      "midtermWeight": 0,
+      "finalTermWeight": 0.5
+    }
+  },
+  {
+    "courseCode": "CS337",
+    "courseNameEn": "Audio and Speech Processing",
+    "courseNameVi": "Xử lý âm thanh và tiếng nói",
+    "courseType": "CN",
+    "credits": 4,
+    "defaultWeights": { // Uncertainty here
+      "progressWeight": 0.2,
+      "practiceWeight": 0.3,
+      "midtermWeight": 0,
+      "finalTermWeight": 0.5
+    }
+  },
+  {
+    "courseCode": "CS535",
+    "courseNameEn": "Speech Synthesis",
+    "courseNameVi": "Tổng hợp tiếng nói",
+    "courseType": "CN",
+    "credits": 4,
+    "defaultWeights": { // Uncertainty here
+      "progressWeight": 0.2,
+      "practiceWeight": 0.3,
+      "midtermWeight": 0,
+      "finalTermWeight": 0.5
+    }
+  },
+  {
+    "courseCode": "CS317",
+    "courseNameEn": "Machine Learning Systems Development and Operations",
+    "courseNameVi": "Phát triển và vận hành hệ thống máy học",
+    "courseType": "CN",
+    "credits": 4,
+    "defaultWeights": { // Uncertainty here
+      "progressWeight": 0.3,
+      "practiceWeight": 0.2,
+      "midtermWeight": 0,
+      "finalTermWeight": 0.5
+    }
   }
 ]
 
