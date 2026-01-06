@@ -733,7 +733,7 @@
     "courseNameVi": "Phân tích và thiết kế thuật toán",
     "courseType": "CSNN",
     "credits": 4,
-    "defaultWeights": { // Uncertainty here
+    "defaultWeights": {
       "progressWeight": 0.2,
       "practiceWeight": 0.2,
       "midtermWeight": 0,
@@ -746,7 +746,7 @@
     "courseNameVi": "Toán cho khoa học máy tính",
     "courseType": "CSNN",
     "credits": 4,
-    "defaultWeights": { // Uncertainty here
+    "defaultWeights": {
       "progressWeight": 0.2,
       "practiceWeight": 0.4,
       "midtermWeight": 0,
@@ -759,7 +759,7 @@
     "courseNameVi": "Xử lý ngôn ngữ tự nhiên",
     "courseType": "CN",
     "credits": 4,
-    "defaultWeights": { // Uncertainty here
+    "defaultWeights": {
       "progressWeight": 0.2,
       "practiceWeight": 0.4,
       "midtermWeight": 0,
@@ -772,7 +772,7 @@
     "courseNameVi": "Nhập môn Thị giác máy tính",
     "courseType": "CN",
     "credits": 4,
-    "defaultWeights": { // Uncertainty here
+    "defaultWeights": {
       "progressWeight": 0.2,
       "practiceWeight": 0.4,
       "midtermWeight": 0,
@@ -785,7 +785,7 @@
     "courseNameVi": "Lập trình Python cho Máy học",
     "courseType": "CSNN",
     "credits": 4,
-    "defaultWeights": { // Uncertainty here
+    "defaultWeights": {
       "progressWeight": 0.2,
       "practiceWeight": 0.4,
       "midtermWeight": 0,
@@ -798,14 +798,13 @@
     "courseNameVi": "Tư duy tính toán",
     "courseType": "CSNN",
     "credits": 4,
-    "defaultWeights": { // Uncertainty here
+    "defaultWeights": {
       "progressWeight": 0.2,
       "practiceWeight": 0.4,
       "midtermWeight": 0,
       "finalTermWeight": 0.4
     }
   },
-  // Eng01, Eng02, Eng03 
   {
     "courseCode": "ENG01",
     "courseNameEn": "English 1",
@@ -845,14 +844,13 @@
       "finalTermWeight": 0.7
     }
   },
-  [
   {
     "courseCode": "CS005",
     "courseNameEn": "Introduction to Computer Science",
     "courseNameVi": "Giới thiệu ngành Khoa học Máy tính",
     "courseType": "CSNN",
     "credits": 1,
-    "defaultWeights": { // Uncertainty here
+    "defaultWeights": {
       "progressWeight": 0.5,
       "practiceWeight": 0,
       "midtermWeight": 0,
@@ -865,7 +863,7 @@
     "courseNameVi": "Nguyên lý và phương pháp lập trình",
     "courseType": "CSNN",
     "credits": 4,
-    "defaultWeights": { // Uncertainty here
+    "defaultWeights": {
       "progressWeight": 0.2,
       "practiceWeight": 0.3,
       "midtermWeight": 0,
@@ -878,7 +876,7 @@
     "courseNameVi": "Phát triển ứng dụng đa phương tiện trên thiết bị di động",
     "courseType": "CN",
     "credits": 4,
-    "defaultWeights": { // Uncertainty here
+    "defaultWeights": {
       "progressWeight": 0.2,
       "practiceWeight": 0.3,
       "midtermWeight": 0,
@@ -891,7 +889,7 @@
     "courseNameVi": "Cấu trúc dữ liệu và giải thuật nâng cao",
     "courseType": "CN",
     "credits": 4,
-    "defaultWeights": { // Uncertainty here
+    "defaultWeights": {
       "progressWeight": 0.2,
       "practiceWeight": 0.2,
       "midtermWeight": 0,
@@ -904,7 +902,7 @@
     "courseNameVi": "Trí tuệ nhân tạo",
     "courseType": "CN",
     "credits": 4,
-    "defaultWeights": { // Uncertainty here
+    "defaultWeights": {
       "progressWeight": 0.2,
       "practiceWeight": 0.3,
       "midtermWeight": 0,
@@ -917,7 +915,7 @@
     "courseNameVi": "Máy học",
     "courseType": "CN",
     "credits": 4,
-    "defaultWeights": { // Uncertainty here
+    "defaultWeights": {
       "progressWeight": 0.2,
       "practiceWeight": 0.3,
       "midtermWeight": 0,
@@ -930,7 +928,7 @@
     "courseNameVi": "Trí tuệ nhân tạo nâng cao",
     "courseType": "CN",
     "credits": 4,
-    "defaultWeights": { // Uncertainty here
+    "defaultWeights": {
       "progressWeight": 0.2,
       "practiceWeight": 0.3,
       "midtermWeight": 0,
@@ -943,7 +941,7 @@
     "courseNameVi": "Hệ thống đa tác tử",
     "courseType": "CN",
     "credits": 4,
-    "defaultWeights": { // Uncertainty here
+    "defaultWeights": {
       "progressWeight": 0.2,
       "practiceWeight": 0.3,
       "midtermWeight": 0,
@@ -956,7 +954,7 @@
     "courseNameVi": "Lập trình symbolic trong trí tuệ nhân tạo",
     "courseType": "CN",
     "credits": 4,
-    "defaultWeights": { // Uncertainty here
+    "defaultWeights": {
       "progressWeight": 0.2,
       "practiceWeight": 0.3,
       "midtermWeight": 0,
@@ -969,7 +967,7 @@
     "courseNameVi": "Máy học nâng cao",
     "courseType": "CN",
     "credits": 4,
-    "defaultWeights": { // Uncertainty here
+    "defaultWeights": {
       "progressWeight": 0.2,
       "practiceWeight": 0.3,
       "midtermWeight": 0,
@@ -982,7 +980,7 @@
     "courseNameVi": "Các hệ cơ sở tri thức",
     "courseType": "CN",
     "credits": 4,
-    "defaultWeights": { // Uncertainty here
+    "defaultWeights": {
       "progressWeight": 0.2,
       "practiceWeight": 0.3,
       "midtermWeight": 0,
@@ -995,7 +993,7 @@
     "courseNameVi": "Biểu diễn tri thức và suy luận",
     "courseType": "CN",
     "credits": 4,
-    "defaultWeights": { // Uncertainty here
+    "defaultWeights": {
       "progressWeight": 0.2,
       "practiceWeight": 0.3,
       "midtermWeight": 0,
@@ -1008,7 +1006,7 @@
     "courseNameVi": "Các hệ giải bài toán thông minh",
     "courseType": "CN",
     "credits": 4,
-    "defaultWeights": { // Uncertainty here
+    "defaultWeights": {
       "progressWeight": 0.2,
       "practiceWeight": 0.3,
       "midtermWeight": 0,
@@ -1021,7 +1019,7 @@
     "courseNameVi": "Ngữ nghĩa học tính toán",
     "courseType": "CN",
     "credits": 4,
-    "defaultWeights": { // Uncertainty here
+    "defaultWeights": {
       "progressWeight": 0.2,
       "practiceWeight": 0.3,
       "midtermWeight": 0,
@@ -1034,7 +1032,7 @@
     "courseNameVi": "Ngôn ngữ học máy tính",
     "courseType": "CN",
     "credits": 4,
-    "defaultWeights": { // Uncertainty here
+    "defaultWeights": {
       "progressWeight": 0.3,
       "practiceWeight": 0,
       "midtermWeight": 0,
@@ -1047,7 +1045,7 @@
     "courseNameVi": "Xử lý ngôn ngữ tự nhiên nâng cao",
     "courseType": "CN",
     "credits": 4,
-    "defaultWeights": { // Uncertainty here
+    "defaultWeights": {
       "progressWeight": 0.2,
       "practiceWeight": 0.3,
       "midtermWeight": 0,
@@ -1060,7 +1058,7 @@
     "courseNameVi": "Máy học trong xử lý ngôn ngữ tự nhiên",
     "courseType": "CN",
     "credits": 4,
-    "defaultWeights": { // Uncertainty here
+    "defaultWeights": {
       "progressWeight": 0.2,
       "practiceWeight": 0.3,
       "midtermWeight": 0,
@@ -1073,7 +1071,7 @@
     "courseNameVi": "Các hệ thống hỏi-đáp",
     "courseType": "CN",
     "credits": 4,
-    "defaultWeights": { // Uncertainty here
+    "defaultWeights": {
       "progressWeight": 0.2,
       "practiceWeight": 0.3,
       "midtermWeight": 0,
@@ -1086,7 +1084,7 @@
     "courseNameVi": "Ngôn ngữ học ngữ liệu",
     "courseType": "CN",
     "credits": 4,
-    "defaultWeights": { // Uncertainty here
+    "defaultWeights": {
       "progressWeight": 0.3,
       "practiceWeight": 0,
       "midtermWeight": 0,
@@ -1099,7 +1097,7 @@
     "courseNameVi": "Dịch máy",
     "courseType": "CN",
     "credits": 4,
-    "defaultWeights": { // Uncertainty here
+    "defaultWeights": {
       "progressWeight": 0.2,
       "practiceWeight": 0.3,
       "midtermWeight": 0,
@@ -1112,7 +1110,7 @@
     "courseNameVi": "Đồ họa máy tính",
     "courseType": "CN",
     "credits": 4,
-    "defaultWeights": { // Uncertainty here
+    "defaultWeights": {
       "progressWeight": 0.2,
       "practiceWeight": 0.3,
       "midtermWeight": 0,
@@ -1125,7 +1123,7 @@
     "courseNameVi": "Thị giác máy tính nâng cao",
     "courseType": "CN",
     "credits": 4,
-    "defaultWeights": { // Uncertainty here
+    "defaultWeights": {
       "progressWeight": 0.2,
       "practiceWeight": 0.3,
       "midtermWeight": 0,
@@ -1138,7 +1136,7 @@
     "courseNameVi": "Nhận dạng",
     "courseType": "CN",
     "credits": 4,
-    "defaultWeights": { // Uncertainty here
+    "defaultWeights": {
       "progressWeight": 0.2,
       "practiceWeight": 0.3,
       "midtermWeight": 0,
@@ -1151,7 +1149,7 @@
     "courseNameVi": "Thị giác máy tính trong tương tác người – máy",
     "courseType": "CN",
     "credits": 4,
-    "defaultWeights": { // Uncertainty here
+    "defaultWeights": {
       "progressWeight": 0.2,
       "practiceWeight": 0.3,
       "midtermWeight": 0,
@@ -1164,7 +1162,7 @@
     "courseNameVi": "Tính toán đa phương tiện",
     "courseType": "CN",
     "credits": 4,
-    "defaultWeights": { // Uncertainty here
+    "defaultWeights": {
       "progressWeight": 0.2,
       "practiceWeight": 0.3,
       "midtermWeight": 0,
@@ -1177,7 +1175,7 @@
     "courseNameVi": "Truy vấn thông tin đa phương tiện",
     "courseType": "CN",
     "credits": 4,
-    "defaultWeights": { // Uncertainty here
+    "defaultWeights": {
       "progressWeight": 0.2,
       "practiceWeight": 0.3,
       "midtermWeight": 0,
@@ -1190,7 +1188,7 @@
     "courseNameVi": "Xử lý âm thanh và tiếng nói",
     "courseType": "CN",
     "credits": 4,
-    "defaultWeights": { // Uncertainty here
+    "defaultWeights": {
       "progressWeight": 0.2,
       "practiceWeight": 0.3,
       "midtermWeight": 0,
@@ -1203,7 +1201,7 @@
     "courseNameVi": "Tổng hợp tiếng nói",
     "courseType": "CN",
     "credits": 4,
-    "defaultWeights": { // Uncertainty here
+    "defaultWeights": {
       "progressWeight": 0.2,
       "practiceWeight": 0.3,
       "midtermWeight": 0,
@@ -1216,7 +1214,7 @@
     "courseNameVi": "Phát triển và vận hành hệ thống máy học",
     "courseType": "CN",
     "credits": 4,
-    "defaultWeights": { // Uncertainty here
+    "defaultWeights": {
       "progressWeight": 0.3,
       "practiceWeight": 0.2,
       "midtermWeight": 0,
